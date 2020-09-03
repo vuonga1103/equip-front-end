@@ -5,15 +5,17 @@
 
 .ui.fluid.card .content .meta {
   font-size: 14px;
+  color: grey;
 }
 
 .ui.fluid.card .image {
-  padding: 5%;
+  padding: 10px;
   background-color: white;
   cursor: pointer;
 }
 
 .ui.fluid.card .image img {
   height: 200px;
+  width: 100%;
   object-fit: cover;
 }

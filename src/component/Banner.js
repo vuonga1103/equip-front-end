@@ -7,7 +7,7 @@ const Banner = () => {
     <div className="ui header">
       <Link to={"/"}>
         <div className="logo">
-          <span classname="logo-img">
+          <span className="logo-img">
             <img
               src="https://img.icons8.com/cotton/150/000000/electric-wheelchair.png"
               alt="Equip Logo, a wheelchair"
