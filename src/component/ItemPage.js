@@ -19,14 +19,15 @@ class ItemPage extends React.Component {
       .then((result) => {
         if (!result.error) {
           this.setState({ item: result });
-          console.log(this.state.item);
         } else {
           this.props.history.push("/not-found");
         }
       });
   };
 
-  displayItem = () => {
+  render() {
+    if (!this.state.item) return null;
+
     const {
       category,
       condition,
@@ -80,10 +81,6 @@ class ItemPage extends React.Component {
         </div>
       </div>
     );
-  };
-
-  render() {
-    return this.state.item ? this.displayItem() : null;
   }
 }
 
