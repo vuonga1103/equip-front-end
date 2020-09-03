@@ -17,6 +17,15 @@ import NotFoundPage from "../component/NotFoundPage";
 class App extends React.Component {
   state = {
     items: [],
+
+    user: {
+      id: "",
+      username: "",
+      city: "",
+      state: "",
+      zip: "",
+      email: "",
+    },
   };
 
   componentDidMount() {
@@ -32,6 +41,8 @@ class App extends React.Component {
       });
   };
 
+  setUser = (user) => this.setState({ user });
+
   render() {
     return (
       <div className="App">
@@ -45,7 +56,9 @@ class App extends React.Component {
 
           <Route path="/about" exact component={AboutPage} />
 
-          <Route path="/login" exact component={LogInPage} />
+          <Route path="/login" exact>
+            <LogInPage setUser={this.setUser} />
+          </Route>
 
           <Route path="/register" exact component={RegisterPage} />
 
