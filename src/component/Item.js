@@ -1,17 +1,22 @@
 import React from "react";
 import "../styling/Item.css";
+import { Link } from "react-router-dom";
 
 const Item = ({ item }) => {
   return (
     <div className="column">
       <div className="ui fluid card">
-        <div className="image">
-          <img src={item.photo} alt={item.name} />
-        </div>
-        <div className="content">
-          <div className="header">
-            {item.name} - {item.price ? `$${item.price}` : `Free`}
+        <Link to={`/item-page/${item.id}`}>
+          <div className="image">
+            <img src={item.photo} alt={item.name} />
           </div>
+        </Link>
+        <div className="content">
+          <Link to={`/item-page/${item.id}`}>
+            <div className="header">
+              {item.name} - {item.price ? `$${item.price}` : `Free`}
+            </div>
+          </Link>
           <div className="meta">
             <span>
               {item.pickup ? "☑️ Pick Up" : null}{" "}
