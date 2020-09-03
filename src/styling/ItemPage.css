@@ -1,0 +1,30 @@
+.ui.grid.container {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.ui.grid.container .six.wide.column .ui.card.raised.segment {
+  font-size: 16px;
+}
+
+.ui.grid.container .six.wide.column .ui.card.raised.segment .image {
+  padding: 5%;
+  background-color: white;
+}
+
+.ui.grid.container .six.wide.column .ui.card.raised.segment .image img {
+  height: 300px;
+  object-fit: cover;
+}
+
+.ui.grid.container .ten.wide.column.raised.segment {
+  padding-top: 5%;
+}
+
+.ui.grid.container .ten.wide.column.raised.segment h3 {
+  font-size: 16px;
+}
+
+.ui.grid.container .ten.wide.column.raised.segment .info {
+  font-size: 16px;
+}

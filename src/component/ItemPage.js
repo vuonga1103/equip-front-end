@@ -4,15 +4,15 @@ import "../styling/ItemPage.css";
 const ItemPage = ({ item }) => {
   return (
     <div className="ui grid container">
-      <div className="six wide column">
-        <div className="ui card">
+      <div className="six wide column ">
+        <div className="ui card raised segment">
           <div className="image">
             <img src={item.photo} alt={item.name} />
           </div>
           <div className="content">
             <div className="description">Seller: {item.user.username}</div>
             <div className="description">
-              Location: {item.user.city}, {item.user.state}, {item.user.zip}
+              {item.user.city}, {item.user.state}, {item.user.zip}
             </div>
             <div className="description">
               <a
@@ -26,10 +26,10 @@ const ItemPage = ({ item }) => {
       </div>
       <div className="ten wide column ui raised segment">
         <h1 className="ui header">
-          {item.name.toUpperCase()} - {item.condition}
+          {item.name.toUpperCase()} ({item.condition})
         </h1>
         <h3 className="ui header">{item.price ? `$${item.price}` : `Free`}</h3>
-        <p>
+        <p className="info">
           <b>Description: </b>
           {item.description}
           <br />

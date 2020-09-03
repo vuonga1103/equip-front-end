@@ -4,7 +4,14 @@ import "../styling/NavBar.css";
 const NavBar = () => {
   return (
     <nav className="ui huge menu">
-      <div className="item">Home</div>
+      <div className="item">
+        <img
+          src="https://img.icons8.com/cotton/100/000000/electric-wheelchair.png"
+          alt="Wheelchair logo"
+        />
+        {"  "}
+        Home
+      </div>
       <div className="item">About</div>
       <div className="right menu">
         <div className="item">Log In</div>
