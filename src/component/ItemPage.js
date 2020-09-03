@@ -1,5 +1,5 @@
 import React from "react";
-import "../ItemPage.css";
+import "../styling/ItemPage.css";
 
 const ItemPage = ({ item }) => {
   return (

@@ -1,0 +1,17 @@
+.logo {
+  position: relative;
+  margin-left: -240px;
+}
+
+.logo-text {
+  color: #2585d4;
+  font-size: 100px;
+  font-family: "Pacifico", cursive;
+  position: absolute;
+  top: 25%;
+}
+
+.tagline {
+  color: grey;
+  font-weight: 500;
+}

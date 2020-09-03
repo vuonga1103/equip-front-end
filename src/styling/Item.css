@@ -1,0 +1,19 @@
+/* .ui.fluid.card .content .header */
+
+.ui.fluid.card .content .header {
+  font-size: 16px;
+}
+
+.ui.fluid.card .content .meta {
+  font-size: 14px;
+}
+
+.ui.fluid.card .image {
+  padding: 5%;
+  background-color: white;
+}
+
+.ui.fluid.card .image img {
+  height: 200px;
+  object-fit: cover;
+}
