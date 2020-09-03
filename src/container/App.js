@@ -44,8 +44,14 @@ class App extends React.Component {
   };
 
   // takes in a nested hash containing keys user and token, reset state accordingly
-  setUser = ({ user, token }) => {
-    this.setState({ user, token });
+  setUser = ({ user, token }) => this.setState({ user, token });
+
+  // a callback function that takes in a component, checks to see if user is logged in, returns the component if user is logged in, otherwise return to root "/"
+  // components that require the user to be logged in to view: EditPage (to edit their info), HomePage (dashboard), SellerPage (to manage the list of items they are selling), NewItemPage (to add new item);
+
+  takeToRootIfNotLoggedIn = (component) => {
+    if (this.state.token) return component;
+    return <ItemsPage items={this.state.items} />;
   };
 
   render() {
@@ -62,18 +68,44 @@ class App extends React.Component {
           <Route path="/about" exact component={AboutPage} />
 
           <Route path="/login" exact>
-            <LogInPage setUser={this.setUser} />
+            {this.state.token ? (
+              <ItemsPage items={this.state.items} />
+            ) : (
+              <LogInPage setUser={this.setUser} />
+            )}
           </Route>
 
-          <Route path="/register" exact component={RegisterPage} />
+          <Route path="/register" exact>
+            {this.state.token ? (
+              <ItemsPage items={this.state.items} />
+            ) : (
+              <RegisterPage />
+            )}
+          </Route>
 
-          <Route path="/edit" exact component={EditPage} />
+          <Route
+            path="/edit"
+            exact
+            render={() => this.takeToRootIfNotLoggedIn(EditPage)}
+          />
 
-          <Route path="/home" exact component={HomePage} />
+          <Route
+            path="/home"
+            exact
+            render={() => this.takeToRootIfNotLoggedIn(HomePage)}
+          />
 
-          <Route path="/seller" exact component={SellerPage} />
+          <Route
+            path="/seller"
+            exact
+            render={() => this.takeToRootIfNotLoggedIn(SellerPage)}
+          />
 
-          <Route path="/new-item" exact component={NewItemPage} />
+          <Route
+            path="/new-item"
+            exact
+            render={() => this.takeToRootIfNotLoggedIn(NewItemPage)}
+          />
 
           <Route path="/not-found" exact component={NotFoundPage} />
 
