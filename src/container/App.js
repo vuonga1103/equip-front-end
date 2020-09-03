@@ -11,17 +11,27 @@ class App extends React.Component {
     items: [],
   };
 
-  showItemPage = (routerProps) => {
-    const itemID = routerProps.match.params.id;
-    const foundItem = this.state.items.find((item) => {
-      return item.id === itemID;
-    });
+  componentDidMount() {
+    this.getItems();
+  }
 
-    if (foundItem) {
-      return <ItemPage item={foundItem} />;
-    } else {
-      return <NotFoundPage />;
-    }
+  showItemPage = (routerProps) => {
+    const itemID = parseInt(routerProps.match.params.id);
+
+    const foundItem = this.state.items.find((item) => item.id === itemID);
+
+    if (foundItem) return <ItemPage item={foundItem} />;
+
+    return <NotFoundPage />;
+  };
+
+  getItems = () => {
+    fetch("http://localhost:4000/items")
+      .then((response) => response.json())
+      .then((items) => {
+        this.allItems = items;
+        this.setState({ items });
+      });
   };
 
   render() {
