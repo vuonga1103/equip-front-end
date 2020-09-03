@@ -1,6 +1,6 @@
 import React from "react";
 import "../styling/App.css";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import NavBar from "../component/NavBar";
 import Banner from "../component/Banner";
 import ItemPage from "../component/ItemPage";
@@ -32,6 +32,16 @@ class App extends React.Component {
 
   componentDidMount() {
     this.getItems();
+
+    if (localStorage.token) {
+      fetch("http://localhost:4000/persist", {
+        headers: {
+          Authorization: `bearer ${localStorage.token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((result) => this.handleResponse(result));
+    }
   }
 
   getItems = () => {
@@ -41,6 +51,16 @@ class App extends React.Component {
         this.allItems = items;
         this.setState({ items });
       });
+  };
+
+  handleResponse = (result) => {
+    if (result.error) {
+      alert(result.error);
+    } else {
+      this.setUser(result);
+      localStorage.token = result.token;
+      this.props.history.push("/home");
+    }
   };
 
   // takes in a nested hash containing keys user and token, reset state accordingly
@@ -55,8 +75,6 @@ class App extends React.Component {
         <NavBar />
         <Banner />
 
-        {/* Switch ensures that the first route that matches will show*/}
-        {/* Add more specific routes first /listings/new before /listings/:id for example */}
         <Switch>
           <Route path="/item-page/:id" exact component={ItemPage} />
 
@@ -66,7 +84,10 @@ class App extends React.Component {
             {this.loggedIn ? (
               <Redirect to="/" />
             ) : (
-              <LogInPage setUser={this.setUser} />
+              <LogInPage
+                setUser={this.setUser}
+                handleResponse={this.handleResponse}
+              />
             )}
           </Route>
 
@@ -103,4 +124,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
