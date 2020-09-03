@@ -26,6 +26,8 @@ class App extends React.Component {
       zip: "",
       email: "",
     },
+
+    token: "",
   };
 
   componentDidMount() {
@@ -41,7 +43,10 @@ class App extends React.Component {
       });
   };
 
-  setUser = (user) => this.setState({ user });
+  // takes in a nested hash containing keys user and token, reset state accordingly
+  setUser = ({ user, token }) => {
+    this.setState({ user, token });
+  };
 
   render() {
     return (

@@ -24,10 +24,10 @@ class LogInPage extends React.Component {
       body: JSON.stringify(this.state),
     })
       .then((response) => response.json())
-      .then((user) => {
-        if (user.error) return alert(user.error);
+      .then((result) => {
+        if (result.error) return alert(result.error);
 
-        this.props.setUser(user);
+        this.props.setUser(result);
         this.props.history.push("/home");
       });
   };
