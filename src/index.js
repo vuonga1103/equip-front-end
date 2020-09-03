@@ -3,14 +3,14 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./container/App";
 import * as serviceWorker from "./serviceWorker";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import "semantic-ui-react";
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <Router>
       <App />
-    </BrowserRouter>
+    </Router>
   </React.StrictMode>,
   document.getElementById("root")
 );

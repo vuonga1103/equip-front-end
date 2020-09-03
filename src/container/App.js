@@ -23,16 +23,6 @@ class App extends React.Component {
     this.getItems();
   }
 
-  showItemPage = (routerProps) => {
-    const itemID = parseInt(routerProps.match.params.id);
-
-    const foundItem = this.state.items.find((item) => item.id === itemID);
-
-    if (foundItem) return <ItemPage item={foundItem} />;
-
-    return <NotFoundPage />;
-  };
-
   getItems = () => {
     fetch("http://localhost:4000/items")
       .then((response) => response.json())
@@ -48,9 +38,10 @@ class App extends React.Component {
         <NavBar />
         <Banner />
 
-        {/* Switch ensures that only one component shows with one route at a time */}
+        {/* Switch ensures that the first route that matches will show*/}
+        {/* Add more specific routes first /listings/new before /listings/:id for example */}
         <Switch>
-          <Route path="/item-page/:id" render={this.showItemPage} />
+          <Route path="/item-page/:id" exact component={ItemPage} />
 
           <Route path="/about" exact component={AboutPage} />
 
@@ -66,11 +57,13 @@ class App extends React.Component {
 
           <Route path="/new-item" exact component={NewItemPage} />
 
+          <Route path="/not-found" exact component={NotFoundPage} />
+
           <Route path="/" exact>
             <ItemsPage items={this.state.items} />
           </Route>
 
-          <Route component={NotFoundPage} />
+          <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>
     );
