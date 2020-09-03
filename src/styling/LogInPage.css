@@ -1,0 +1,10 @@
+.ui.form {
+  width: 50%;
+  margin: auto;
+  padding-top: 30px;
+}
+
+.ui.form .ui.button {
+  color: white;
+  background-color: #2585d4;
+}
