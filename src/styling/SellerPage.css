@@ -1,0 +1,15 @@
+.ui.grid {
+  border: 5px solid red;
+}
+
+.ui.grid .sixteen.wide.column {
+  border: 3px solid blue;
+}
+
+.ui.grid .ten.wide.column {
+  border: 3px solid green;
+}
+
+.ui.grid .six.wide.column {
+  border: 3px solid purple;
+}

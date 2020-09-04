@@ -2,10 +2,10 @@ import React from "react";
 import "../styling/Banner.css";
 import { Link } from "react-router-dom";
 
-const Banner = () => {
+const Banner = ({ loggedIn }) => {
   return (
     <div className="ui header">
-      <Link to={"/"}>
+      <Link to={loggedIn ? "/home" : "/"}>
         <div className="logo">
           <span className="logo-img">
             <img

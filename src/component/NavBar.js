@@ -14,6 +14,12 @@ const NavBar = ({ loggedIn, handleLogOut }) => {
         </div>
       </Link>
 
+      {loggedIn ? (
+        <div className="item">
+          <Link to={"/home"}>Home</Link>
+        </div>
+      ) : null}
+
       <div className="item">
         <Link to={"/about"}>About</Link>
       </div>

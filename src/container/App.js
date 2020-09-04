@@ -107,7 +107,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <NavBar loggedIn={loggedIn} handleLogOut={this.handleLogOut} />
-        <Banner />
+        <Banner loggedIn={loggedIn} />
 
         <Switch>
           <Route path="/item-page/:id" exact component={ItemPage} />
@@ -135,7 +135,12 @@ class App extends React.Component {
 
           <ProtectedRoute exact path="/edit" component={EditPage} />
 
-          <ProtectedRoute exact path="/home" component={HomePage} />
+          <ProtectedRoute
+            exact
+            path="/home"
+            user={this.state.user}
+            component={HomePage}
+          />
 
           <ProtectedRoute exact path="/seller" component={SellerPage} />
 
