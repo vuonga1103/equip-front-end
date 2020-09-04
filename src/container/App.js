@@ -68,11 +68,31 @@ class App extends React.Component {
   // takes in a nested hash containing keys user and token, reset state accordingly
   setUser = ({ user, token }) => this.setState({ user, token });
 
+  handleLogOut = () => {
+    localStorage.removeItem("token");
+
+    this.setState({
+      user: {
+        id: "",
+        username: "",
+        city: "",
+        state: "",
+        zip: "",
+        email: "",
+      },
+
+      token: "",
+    });
+
+    this.props.history.push("/");
+  };
+
   render() {
     const loggedIn = localStorage.getItem("token");
+
     return (
       <div className="App">
-        <NavBar />
+        <NavBar loggedIn={loggedIn} handleLogOut={this.handleLogOut} />
         <Banner />
 
         <Switch>

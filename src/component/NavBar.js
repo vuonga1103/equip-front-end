@@ -2,7 +2,7 @@ import React from "react";
 import "../styling/NavBar.css";
 import { Link } from "react-router-dom";
 
-const NavBar = () => {
+const NavBar = ({ loggedIn, handleLogOut }) => {
   return (
     <nav className="ui huge menu">
       <Link to={"/"}>
@@ -19,13 +19,22 @@ const NavBar = () => {
       </div>
 
       <div className="right menu">
+        {!loggedIn ? (
+          <div className="item">
+            <Link to={"/login"}>Log In</Link>
+          </div>
+        ) : null}
+
         <div className="item">
-          <Link to={"/login"}>Log In</Link>
-        </div>
-        <div className="item">
-          <Link to={"/register"}>
-            <div className="ui primary button">Sign Up</div>
-          </Link>
+          {loggedIn ? (
+            <div className="ui primary button" onClick={handleLogOut}>
+              Log Out
+            </div>
+          ) : (
+            <Link to={"/register"}>
+              <div className="ui primary button">Sign Up</div>
+            </Link>
+          )}
         </div>
       </div>
     </nav>
