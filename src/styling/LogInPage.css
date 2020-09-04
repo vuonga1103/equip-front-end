@@ -8,3 +8,9 @@
   color: white;
   background-color: #2585d4;
 }
+
+.ui.form .field label {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 500;
+}

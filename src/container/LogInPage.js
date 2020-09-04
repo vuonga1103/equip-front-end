@@ -36,8 +36,9 @@ class LogInPage extends React.Component {
 
     return (
       <form className="ui form" onSubmit={this.handleSubmit}>
+        <h4 className="ui dividing header">Log In</h4>
         <div className="field">
-          <label>USERNAME</label>
+          <label>Username</label>
           <input
             type="text"
             name="username"
@@ -47,7 +48,7 @@ class LogInPage extends React.Component {
           />
         </div>
         <div className="field">
-          <label>PASSWORD</label>
+          <label>Password</label>
           <input
             type="password"
             name="password"

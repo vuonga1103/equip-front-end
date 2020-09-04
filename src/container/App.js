@@ -85,6 +85,7 @@ class App extends React.Component {
     });
 
     this.props.history.push("/");
+    alert("Log Out Successful!");
   };
 
   render() {
@@ -112,7 +113,11 @@ class App extends React.Component {
           </Route>
 
           <Route path="/register" exact>
-            {loggedIn ? <Redirect to="/" /> : <RegisterPage />}
+            {loggedIn ? (
+              <Redirect to="/" />
+            ) : (
+              <RegisterPage handleResponse={this.handleResponse} />
+            )}
           </Route>
 
           <ProtectedRoute exact path="/edit" component={EditPage} />

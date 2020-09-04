@@ -1,0 +1,25 @@
+.ui.form .header {
+  font-size: 20px;
+}
+
+.ui.form .field label {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+.ui.form .header {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+.ui.form .field {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.ui.form {
+  margin-bottom: 20px;
+}
