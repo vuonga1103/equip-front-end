@@ -38,7 +38,7 @@ class LogInPage extends React.Component {
     const { password, username } = this.state;
 
     return (
-      <form className="ui form" onSubmit={this.handleSubmit}>
+      <form className="ui form" id="log-in-form" onSubmit={this.handleSubmit}>
         <h4 className="ui dividing header">Log In</h4>
         <div className="field">
           <label>Username</label>

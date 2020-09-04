@@ -1,15 +1,15 @@
-.ui.grid {
+#seller-page-container {
   border: 5px solid red;
 }
 
-.ui.grid .sixteen.wide.column {
+#seller-page-container .sixteen.wide.column {
   border: 3px solid blue;
 }
 
-.ui.grid .ten.wide.column {
+#seller-page-container .ten.wide.column {
   border: 3px solid green;
 }
 
-.ui.grid .six.wide.column {
+#seller-page-container .six.wide.column {
   border: 3px solid purple;
 }

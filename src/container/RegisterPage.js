@@ -59,6 +59,7 @@ class RegisterPage extends React.Component {
     return (
       <form
         className="ui form"
+        id="register-form"
         onChange={this.handleInput}
         onSubmit={this.handleSubmit}
       >

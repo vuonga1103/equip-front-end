@@ -1,15 +1,23 @@
-.ui.form {
-  width: 50%;
+#log-in-form {
   margin: auto;
+  margin-bottom: 20px;
+  width: 300px;
   padding-top: 30px;
 }
 
-.ui.form .ui.button {
+#log-in-form .header {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+#log-in-form .ui.button {
   color: white;
   background-color: #2585d4;
 }
 
-.ui.form .field label {
+#log-in-form .field label {
   text-align: left;
   font-size: 15px;
   font-weight: 500;

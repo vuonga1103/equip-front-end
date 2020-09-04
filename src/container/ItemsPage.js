@@ -12,7 +12,7 @@ class ItemsPage extends React.Component {
 
   render() {
     return (
-      <div className="ui grid container">
+      <div className="ui grid container" id="items-page-container">
         <div className="four wide column">
           hello from first column hello from first column hello from first
           column hello from first column hello from first column hello from

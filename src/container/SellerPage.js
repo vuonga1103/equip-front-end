@@ -4,7 +4,7 @@ import "../styling/SellerPage.css";
 class SellerPage extends React.Component {
   render() {
     return (
-      <div className="ui grid">
+      <div className="ui grid" id="seller-page-container">
         <div className="six wide column">
           blah blab blah blah blab blahblah blab blah
         </div>

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const Item = ({ item }) => {
   return (
     <div className="column">
-      <div className="ui fluid card">
+      <div className="ui fluid card" id="item-card">
         <Link to={`/item-page/${item.id}`}>
           <div className="image">
             <img src={item.photo} alt={item.name} />
