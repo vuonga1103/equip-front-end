@@ -24,7 +24,11 @@ class LogInPage extends React.Component {
       body: JSON.stringify(this.state),
     })
       .then((response) => response.json())
-      .then((result) => this.props.handleResponse(result));
+      .then((result) => {
+        if (this.props.handleResponse(result)) {
+          this.props.history.push("/home");
+        }
+      });
   };
 
   render() {

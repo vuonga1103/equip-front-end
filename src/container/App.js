@@ -13,6 +13,7 @@ import EditPage from "./EditPage";
 import SellerPage from "./SellerPage";
 import NewItemPage from "./NewItemPage";
 import NotFoundPage from "../component/NotFoundPage";
+import ProtectedRoute from "../component/ProtectedRoute";
 
 class App extends React.Component {
   state = {
@@ -56,20 +57,19 @@ class App extends React.Component {
   handleResponse = (result) => {
     if (result.error) {
       alert(result.error);
+      return false;
     } else {
       this.setUser(result);
       localStorage.token = result.token;
-      this.props.history.push("/home");
+      return true;
     }
   };
 
   // takes in a nested hash containing keys user and token, reset state accordingly
-  setUser = ({ user, token }) => {
-    this.setState({ user, token });
-    this.loggedIn = this.state.token;
-  };
+  setUser = ({ user, token }) => this.setState({ user, token });
 
   render() {
+    const loggedIn = localStorage.getItem("token");
     return (
       <div className="App">
         <NavBar />
@@ -81,7 +81,7 @@ class App extends React.Component {
           <Route path="/about" exact component={AboutPage} />
 
           <Route path="/login" exact>
-            {this.loggedIn ? (
+            {loggedIn ? (
               <Redirect to="/" />
             ) : (
               <LogInPage
@@ -92,24 +92,16 @@ class App extends React.Component {
           </Route>
 
           <Route path="/register" exact>
-            {this.loggedIn ? <Redirect to="/" /> : <RegisterPage />}
+            {loggedIn ? <Redirect to="/" /> : <RegisterPage />}
           </Route>
 
-          <Route path="/edit" exact>
-            {!this.loggedIn ? <Redirect to="/" /> : <EditPage />}
-          </Route>
+          <ProtectedRoute exact path="/edit" component={EditPage} />
 
-          <Route path="/home" exact>
-            {!this.loggedIn ? <Redirect to="/" /> : <HomePage />}
-          </Route>
+          <ProtectedRoute exact path="/home" component={HomePage} />
 
-          <Route path="/seller" exact>
-            {!this.loggedIn ? <Redirect to="/" /> : <SellerPage />}
-          </Route>
+          <ProtectedRoute exact path="/seller" component={SellerPage} />
 
-          <Route path="/new-item" exact>
-            {!this.loggedIn ? <Redirect to="/" /> : <NewItemPage />}
-          </Route>
+          <ProtectedRoute exact path="/new-item" component={NewItemPage} />
 
           <Route path="/not-found" exact component={NotFoundPage} />
 
