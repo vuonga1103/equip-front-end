@@ -100,6 +100,11 @@ class App extends React.Component {
     alert("Log Out Successful!");
   };
 
+  // Return an array of the current logged in user's items (items that they are selling)
+  usersItems = () => {
+    return this.allItems.filter((i) => i.user.id === this.state.user.id);
+  };
+
   render() {
     // If localStorage has key "token" that points to something that is not an empty string, then we are logged in
     const loggedIn = localStorage.getItem("token");
@@ -142,7 +147,12 @@ class App extends React.Component {
             component={HomePage}
           />
 
-          <ProtectedRoute exact path="/seller" component={SellerPage} />
+          <ProtectedRoute
+            exact
+            path="/seller"
+            usersItems={this.usersItems}
+            component={SellerPage}
+          />
 
           <ProtectedRoute exact path="/new-item" component={NewItemPage} />
 

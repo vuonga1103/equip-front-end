@@ -1,5 +1,9 @@
 #seller-page-container {
   border: 5px solid red;
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
 }
 
 #seller-page-container .sixteen.wide.column {

@@ -1,8 +1,12 @@
 import React from "react";
 import "../styling/Item.css";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
-const Item = ({ item }) => {
+const Item = ({ item, renderItemBriefDetails }) => {
+  let location = useLocation();
+
+  // if the location.pathname is /seller AND there is a user logged in, then don't display the pickup/shipping, instead have a toggle checkbox that says sold
+
   return (
     <div className="column">
       <div className="ui fluid card" id="item-card">
@@ -17,17 +21,13 @@ const Item = ({ item }) => {
               {item.name} - {item.price ? `$${item.price}` : `Free`}
             </div>
           </Link>
-          <div className="meta">
-            <span>
-              {item.pickup ? "☑️ Pick Up" : null}{" "}
-              {item.shipping ? "☑️ Shipping" : null}
-            </span>
-          </div>
-          <div className="meta">
-            <span>
-              {item.user.city}, {item.user.state}, {item.user.zip}
-            </span>
-          </div>
+
+          {location.pathname === "/" ? renderItemBriefDetails(item) : null}
+
+          {/* <div className="ui toggle checkbox">
+            <input type="checkbox" name="public" />
+            <label>Mark as Sold</label>
+          </div> */}
         </div>
       </div>
     </div>
