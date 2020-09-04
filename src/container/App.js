@@ -35,7 +35,22 @@ class App extends React.Component {
     // Load up items in database, setting them to this.state.items array
     this.getItems();
 
-    // If the user has previously logged in, make a request to /persist, sending the token stored in localStorage. Backend takes care of decoding the token, sends back result in the form of a { user: {}, token: "..."} object
+    // If the user previously logged in, we want the user to stay logged in
+    this.persistLoggedInUser();
+  }
+
+  // Get items that have already been filtered in the backend for only items that have not been sold (item.sold is false); set this.state.items array to the items that return
+  getItems = () => {
+    fetch("http://localhost:4000/items")
+      .then((response) => response.json())
+      .then((items) => {
+        this.allItems = items;
+        this.setState({ items });
+      });
+  };
+
+  // If the user has previously logged in, make a request to /persist, sending the token stored in localStorage. Backend takes care of decoding the token, sends back result in the form of a { user: {}, token: "..."} object
+  persistLoggedInUser = () => {
     if (localStorage.token) {
       fetch("http://localhost:4000/persist", {
         headers: {
@@ -47,16 +62,6 @@ class App extends React.Component {
         // Call this.handleResponse to handle: setting this.state.user to appropriate user, setting this.state.token to appropriate token, setting the localStorage.token to the token key we got back
         .then((result) => this.handleResponse(result));
     }
-  }
-
-  // Get items that have already been filtered in the backend for only items that have not been sold (item.sold is false); set this.state.items array to the items that return
-  getItems = () => {
-    fetch("http://localhost:4000/items")
-      .then((response) => response.json())
-      .then((items) => {
-        this.allItems = items;
-        this.setState({ items });
-      });
   };
 
   // Handles the response of fetch to backend that sends back a result in the form of a { user: {}, token: "..."} object; if we get back an error object in the form of {error: ...}, then alert the user and return false, if not, set this.state.user to the user that we get back, and set this.state.token to the token we get back, then return true
