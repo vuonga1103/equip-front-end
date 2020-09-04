@@ -45,7 +45,7 @@ class ItemPage extends React.Component {
 
     return (
       <div className="ui grid container" id="item-page-container">
-        <div className="six wide column ">
+        <div className="six wide column">
           <div className="ui card raised segment">
             <div className="image">
               <img src={photo} alt={name} />

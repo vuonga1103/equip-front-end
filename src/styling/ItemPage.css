@@ -3,28 +3,29 @@
   margin-bottom: 20px;
 }
 
-#item-page-container .six.wide.column .ui.card.raised.segment {
+#item-page-container .six.wide.column .ui.card {
   font-size: 16px;
 }
 
-#item-page-container .six.wide.column .ui.card.raised.segment .image {
-  padding: 5%;
+#item-page-container .six.wide.column .ui.card .image {
+  padding: 10px;
   background-color: white;
 }
 
-#item-page-container .six.wide.column .ui.card.raised.segment .image img {
+#item-page-container .six.wide.column .ui.card .image img {
   height: 300px;
-  object-fit: cover;
+  width: 100%;
+  object-fit: contain;
 }
 
-#item-page-container .ten.wide.column.raised.segment {
+#item-page-container .ten.wide.column {
   padding-top: 5%;
 }
 
-#item-page-container .ten.wide.column.raised.segment h3 {
+#item-page-container .ten.wide.column h3 {
   font-size: 16px;
 }
 
-#item-page-container .ten.wide.column.raised.segment .info {
+#item-page-container .ten.wide.column .info {
   font-size: 16px;
 }
