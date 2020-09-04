@@ -7,6 +7,7 @@ class ItemPage extends React.Component {
     item: null,
   };
 
+  // Once component mounts, make a fetch for the item with the id we get from this.props.match.params.id, which is something we get for free from the Route (/item-page/:id); also we are able to access additional props thanks to withRouter from "react-router-dom"
   componentDidMount() {
     this.getItem();
   }
@@ -17,6 +18,7 @@ class ItemPage extends React.Component {
     fetch("http://localhost:4000/items/" + id)
       .then((response) => response.json())
       .then((result) => {
+        // If we don't get back an error, then set the state for the item accordingly, otherwise take user to the not-found page; we are able to use this.props.history.push() also thanks to withRouter
         if (!result.error) {
           this.setState({ item: result });
         } else {
@@ -26,6 +28,7 @@ class ItemPage extends React.Component {
   };
 
   render() {
+    // Guard clause for early exit if this.state.item has not yet been set
     if (!this.state.item) return null;
 
     const {

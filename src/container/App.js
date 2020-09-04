@@ -3,7 +3,7 @@ import "../styling/App.css";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
 import NavBar from "../component/NavBar";
 import Banner from "../component/Banner";
-import ItemPage from "../component/ItemPage";
+import ItemPage from "./ItemPage";
 import AboutPage from "../component/AboutPage";
 import HomePage from "../component/HomePage";
 import ItemsPage from "./ItemsPage";
@@ -32,8 +32,10 @@ class App extends React.Component {
   };
 
   componentDidMount() {
+    // Load up items in database, setting them to this.state.items array
     this.getItems();
 
+    // If the user has previously logged in, make a request to /persist, sending the token stored in localStorage. Backend takes care of decoding the token, sends back result in the form of a { user: {}, token: "..."} object
     if (localStorage.token) {
       fetch("http://localhost:4000/persist", {
         headers: {
@@ -41,10 +43,13 @@ class App extends React.Component {
         },
       })
         .then((response) => response.json())
+
+        // Call this.handleResponse to handle: setting this.state.user to appropriate user, setting this.state.token to appropriate token, setting the localStorage.token to the token key we got back
         .then((result) => this.handleResponse(result));
     }
   }
 
+  // Get items that have already been filtered in the backend for only items that have not been sold (item.sold is false); set this.state.items array to the items that return
   getItems = () => {
     fetch("http://localhost:4000/items")
       .then((response) => response.json())
@@ -54,6 +59,7 @@ class App extends React.Component {
       });
   };
 
+  // Handles the response of fetch to backend that sends back a result in the form of a { user: {}, token: "..."} object; if we get back an error object in the form of {error: ...}, then alert the user and return false, if not, set this.state.user to the user that we get back, and set this.state.token to the token we get back, then return true
   handleResponse = (result) => {
     if (result.error) {
       alert(result.error);
@@ -65,9 +71,10 @@ class App extends React.Component {
     }
   };
 
-  // takes in a nested hash containing keys user and token, reset state accordingly
+  // Takes in an object containing keys user and token, reset state accordingly
   setUser = ({ user, token }) => this.setState({ user, token });
 
+  // Rid the localStorage of the token, reset this.state.user and this.state.token; bring the user to root page, and alert them that they have been logged out
   handleLogOut = () => {
     localStorage.removeItem("token");
 
@@ -89,6 +96,7 @@ class App extends React.Component {
   };
 
   render() {
+    // If localStorage has key "token" that points to something that is not an empty string, then we are logged in
     const loggedIn = localStorage.getItem("token");
 
     return (

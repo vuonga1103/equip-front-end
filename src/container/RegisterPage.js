@@ -13,10 +13,12 @@ class RegisterPage extends React.Component {
     email: "",
   };
 
+  // For form control, set the state for appropriate key/value on each change detected
   handleInput = (e) => {
     this.setState({ [e.target.name]: e.target.value });
   };
 
+  // Upon submission of the form, create a newUser object, which has all info from this.state (except password_confirm, which would be redundant), send the newUser object to backend via post request; backend will take care of creating a new user, giving that user a token, and returning a result in {user: {}, token: "..."} format
   handleSubmit = (e) => {
     e.preventDefault();
 
@@ -35,6 +37,8 @@ class RegisterPage extends React.Component {
     })
       .then((response) => response.json())
       .then((result) => {
+        // Once result comes back, we handle the result by setting this.state.user and this.state.token in App.js accordingly, as well as storing the token we got back in localStorage so as to avoid logging the user out with page refresh; after that we bring the user to /home
+
         if (this.props.handleResponse(result)) {
           this.props.history.push("/home");
         }

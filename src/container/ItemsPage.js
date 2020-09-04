@@ -3,7 +3,7 @@ import Item from "../component/Item";
 import "../styling/ItemsPage.css";
 
 class ItemsPage extends React.Component {
-  // has access to this.props.items
+  // Map through the array of items, and turning them into an item card
   renderItems = () => {
     return this.props.items.map((i) => {
       return <Item key={i.id} item={i} />;
