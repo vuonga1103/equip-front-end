@@ -30,28 +30,13 @@ class NewItemPage extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    const newItem = { ...this.state, photo: "", sold: false };
+    const formData = new FormData();
+
+    for (const key in this.state) {
+      formData.append(key, this.state[key]);
+    }
 
     fetch("http://localhost:4000/items", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-        Authorization: `bearer ${localStorage.token}`,
-      },
-      body: JSON.stringify(newItem),
-    })
-      .then((response) => response.json())
-      .then((newItemNoPhoto) => {
-        this.postPhoto();
-      });
-  };
-
-  postPhoto = () => {
-    const formData = new FormData();
-    formData.append("photo", this.state.photo);
-
-    fetch("http://localhost:4000/post-photo", {
       method: "POST",
       headers: { Authorization: `bearer ${localStorage.token}` },
       body: formData,
