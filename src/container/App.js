@@ -116,6 +116,28 @@ class App extends React.Component {
     this.setState({ items });
   };
 
+  // takes in a sort criteria ("low-to-high", "high-to-low", or "location"), sort this.state.items, and set the state
+
+  sortItems = (criteria) => {
+    let items = [...this.state.items];
+
+    switch (criteria) {
+      case "low-to-high":
+        items.sort((a, b) => a.price - b.price);
+        break;
+      case "high-to-low":
+        items.sort((a, b) => b.price - a.price);
+        break;
+      default:
+        items.sort((a, b) => a.id - b.id);
+    }
+
+    this.setState({ items });
+    return items;
+  };
+
+  // filterItems takes in an array of filter criteria and
+
   render() {
     // If localStorage has key "token" that points to something that is not an empty string, then we are logged in
     const loggedIn = localStorage.getItem("token");
@@ -176,7 +198,7 @@ class App extends React.Component {
           <Route path="/not-found" exact component={NotFoundPage} />
 
           <Route path="/" exact>
-            <ItemsPage items={this.state.items} />
+            <ItemsPage items={this.state.items} sortItems={this.sortItems} />
           </Route>
 
           <Route path="*" component={NotFoundPage} />
