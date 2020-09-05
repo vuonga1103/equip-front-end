@@ -166,7 +166,12 @@ class App extends React.Component {
             addOrRemoveItem={this.addOrRemoveItem}
           />
 
-          <ProtectedRoute exact path="/new-item" component={NewItemPage} />
+          <ProtectedRoute
+            exact
+            path="/new-item"
+            addOrRemoveItem={this.addOrRemoveItem}
+            component={NewItemPage}
+          />
 
           <Route path="/not-found" exact component={NotFoundPage} />
 

@@ -49,16 +49,7 @@ class SellerPage extends React.Component {
           stuff for items here
         </div>
         <div className="sixteen wide column">
-          <div className="ui three column grid">
-            {this.renderUserItems()}
-            here is where we display the items here is where we display the
-            items here is where we display the items here is where we display
-            the items here is where we display the items here is where we
-            display the items here is where we display the items here is where
-            we display the items here is where we display the items here is
-            where we display the items here is where we display the items here
-            is where we display the items here is where we display the items
-          </div>
+          <div className="ui three column grid">{this.renderUserItems()}</div>
         </div>
       </div>
     );

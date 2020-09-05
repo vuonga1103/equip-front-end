@@ -57,7 +57,7 @@ class ItemPage extends React.Component {
               </div>
               <div className="description">
                 <a
-                  href={`mailto:${email}?subject=Equip%20Inquiry%20Re:%20${name}&body=Hi%20I%20am%20interested%20in%20your%20posted%20item:%20${name}`}
+                  href={`mailto:${email}?subject=Equip%20Inquiry%20Re:%20${name}&body=Hi!%20I%20am%20interested%20in%20your%20posted%20item:%20${name}`}
                 >
                   Contact Seller
                 </a>

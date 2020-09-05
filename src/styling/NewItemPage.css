@@ -1,0 +1,35 @@
+#new-item-form {
+  margin: auto;
+  margin-bottom: 20px;
+  width: 500px;
+  padding-top: 30px;
+}
+
+#new-item-form .header {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+  font-size: 20px;
+}
+
+#new-item-form .field {
+  width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#new-item-form .field label {
+  text-align: left;
+  font-size: 15px;
+  font-weight: 500;
+}
+
+#new-item-form .ui.button {
+  color: white;
+  background-color: #2585d4;
+}
+
+#new-item-form #availability-field .checkbox {
+  margin-right: 10px;
+}
