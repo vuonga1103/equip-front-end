@@ -1,5 +1,5 @@
 import React from "react";
-import Item from "../component/Item";
+import Item from "./Item";
 import "../styling/ItemsPage.css";
 
 class ItemsPage extends React.Component {
@@ -14,25 +14,6 @@ class ItemsPage extends React.Component {
         />
       );
     });
-  };
-
-  // Takes in an item object, return JSX for that item's brief details (Pickup/Shipping availability and Location)
-  renderItemBriefDetails = (item) => {
-    return (
-      <div>
-        <div className="meta">
-          <span>
-            {item.pickup ? "☑️ Pick Up" : null}{" "}
-            {item.shipping ? "☑️ Shipping" : null}
-          </span>
-        </div>
-        <div className="meta">
-          <span>
-            {item.user.city}, {item.user.state}, {item.user.zip}
-          </span>
-        </div>
-      </div>
-    );
   };
 
   render() {

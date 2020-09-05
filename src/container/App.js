@@ -102,7 +102,7 @@ class App extends React.Component {
 
   // Return an array of the current logged in user's items (items that they are selling)
   usersItems = () => {
-    return this.allItems.filter((i) => i.user.id === this.state.user.id);
+    return this.state.items.filter((i) => i.user.id === this.state.user.id);
   };
 
   render() {
@@ -150,7 +150,7 @@ class App extends React.Component {
           <ProtectedRoute
             exact
             path="/seller"
-            usersItems={this.usersItems}
+            user={this.state.user}
             component={SellerPage}
           />
 

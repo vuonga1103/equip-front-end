@@ -1,11 +1,31 @@
 import React from "react";
 import "../styling/SellerPage.css";
 import { Link } from "react-router-dom";
-import Item from "../component/Item";
+import Item from "./Item";
 
 class SellerPage extends React.Component {
+  state = {
+    userItems: [],
+  };
+
+  componentDidMount() {
+    this.getUserItems();
+  }
+
+  getUserItems() {
+    fetch("http://localhost:4000/user-items", {
+      headers: {
+        Authorization: `bearer ${localStorage.token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((userItems) => {
+        this.setState({ userItems });
+      });
+  }
+
   renderUserItems = () => {
-    return this.props.usersItems().map((i) => {
+    return this.state.userItems.map((i) => {
       return <Item key={i.id} item={i} />;
     });
   };

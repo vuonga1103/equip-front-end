@@ -13,9 +13,7 @@ const HomePage = ({ user }) => {
       </Link>
 
       <Link to={"/seller"}>
-        <button className="fluid ui button primary">
-          View Items I Have For Sale
-        </button>
+        <button className="fluid ui button primary">View My Items</button>
       </Link>
 
       <Link to={"/edit"}>
