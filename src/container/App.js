@@ -105,6 +105,17 @@ class App extends React.Component {
     return this.state.items.filter((i) => i.user.id === this.state.user.id);
   };
 
+  // Takes in an item object, if that object's sold is set to false, then set this.state.items to include that object; otherwise set this.state.items to not include that item
+  addOrRemoveItem = (item) => {
+    let items;
+    if (!item.sold) {
+      items = [...this.state.items, item];
+    } else {
+      items = this.state.items.filter((i) => i.id !== item.id);
+    }
+    this.setState({ items });
+  };
+
   render() {
     // If localStorage has key "token" that points to something that is not an empty string, then we are logged in
     const loggedIn = localStorage.getItem("token");
@@ -152,6 +163,7 @@ class App extends React.Component {
             path="/seller"
             user={this.state.user}
             component={SellerPage}
+            addOrRemoveItem={this.addOrRemoveItem}
           />
 
           <ProtectedRoute exact path="/new-item" component={NewItemPage} />

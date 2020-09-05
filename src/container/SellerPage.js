@@ -26,7 +26,13 @@ class SellerPage extends React.Component {
 
   renderUserItems = () => {
     return this.state.userItems.map((i) => {
-      return <Item key={i.id} item={i} />;
+      return (
+        <Item
+          key={i.id}
+          item={i}
+          addOrRemoveItem={this.props.addOrRemoveItem}
+        />
+      );
     });
   };
 

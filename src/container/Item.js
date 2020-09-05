@@ -5,10 +5,6 @@ import BriefDetails from "../component/BriefDetails";
 import SoldCheckbox from "../component/SoldCheckbox";
 
 class Item extends React.Component {
-  state = {
-    sold: null,
-  };
-
   toggleSold = (item) => {
     item.sold = !item.sold;
 
@@ -22,8 +18,7 @@ class Item extends React.Component {
     })
       .then((response) => response.json())
       .then((item) => {
-        const sold = item.sold;
-        this.setState({ sold });
+        this.props.addOrRemoveItem(item);
       });
   };
 
