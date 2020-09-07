@@ -31,6 +31,7 @@ class LogInPage extends React.Component {
         if (this.props.handleResponse(result)) {
           this.props.history.push("/home");
         }
+        return true;
       });
   };
 

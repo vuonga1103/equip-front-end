@@ -45,6 +45,8 @@ class NewItemPage extends React.Component {
       .then((item) => {
         this.props.addOrRemoveItem(item);
         this.props.history.push(`/item-page/${item.id}`);
+        this.props.getVisitorsLocation();
+        return true;
       });
   };
 
@@ -66,7 +68,7 @@ class NewItemPage extends React.Component {
         onChange={this.handleChange}
         onSubmit={this.handleSubmit}
       >
-        <h4 className="ui dividing header">Add Item</h4>
+        <h4 className="ui dividing header">Add Sale Item</h4>
 
         <div className="field">
           <label>Item Name</label>
@@ -109,11 +111,11 @@ class NewItemPage extends React.Component {
         </div>
 
         <div className="field">
-          <label>Price (USD)</label>
+          <label>Price</label>
           <input
             type="number"
             name="price"
-            placeholder="Price"
+            placeholder="Price - Enter 0 If Donating Item"
             required
             value={price}
             onChange={this.handleChange}

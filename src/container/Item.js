@@ -19,6 +19,7 @@ class Item extends React.Component {
       .then((response) => response.json())
       .then((item) => {
         this.props.addOrRemoveItem(item);
+        return true;
       });
   };
 

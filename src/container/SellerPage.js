@@ -2,10 +2,12 @@ import React from "react";
 import "../styling/SellerPage.css";
 import { Link } from "react-router-dom";
 import Item from "./Item";
+import MyItemsFilter from "../component/MyItemsFilter";
 
 class SellerPage extends React.Component {
   state = {
     userItems: [],
+    soldFilter: "",
   };
 
   componentDidMount() {
@@ -24,8 +26,23 @@ class SellerPage extends React.Component {
       });
   }
 
+  setFilter = (e) => {
+    const soldFilter = e.target.value;
+    this.setState({ soldFilter });
+  };
+
   renderUserItems = () => {
-    return this.state.userItems.map((i) => {
+    let myFilteredItems = this.state.userItems;
+
+    if (this.state.soldFilter === "sold") {
+      myFilteredItems = this.state.userItems.filter((i) => i.sold);
+    }
+
+    if (this.state.soldFilter === "not-sold") {
+      myFilteredItems = this.state.userItems.filter((i) => !i.sold);
+    }
+
+    return myFilteredItems.map((i) => {
       return (
         <Item
           key={i.id}
@@ -38,17 +55,19 @@ class SellerPage extends React.Component {
 
   render() {
     return (
-      <div className="ui grid" id="seller-page-container">
-        <div className="six wide column">
+      <div className="ui grid container" id="seller-page-container">
+        <div className="four wide column">
           <Link to={"/new-item"}>
-            <button className="fluid ui button primary">Add New Item</button>
+            <button className="fluid ui button primary">
+              Add New Item For Sale
+            </button>
           </Link>
+          <MyItemsFilter
+            soldFilter={this.state.soldFilter}
+            setFilter={this.setFilter}
+          />
         </div>
-        <div className="ten wide column">
-          sorting stuff for items here sorting stuff for items here sorting
-          stuff for items here
-        </div>
-        <div className="sixteen wide column">
+        <div className="twelve wide column">
           <div className="ui three column grid">{this.renderUserItems()}</div>
         </div>
       </div>

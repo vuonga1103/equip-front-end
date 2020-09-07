@@ -32,7 +32,6 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    // Load up items in database, setting them to this.state.items array
     this.getItems();
 
     // If the user previously logged in, we want the user to stay logged in
@@ -44,8 +43,8 @@ class App extends React.Component {
     fetch("http://localhost:4000/items")
       .then((response) => response.json())
       .then((items) => {
-        this.allItems = items;
         this.setState({ items });
+        return true;
       });
   };
 
@@ -60,7 +59,10 @@ class App extends React.Component {
         .then((response) => response.json())
 
         // Call this.handleResponse to handle: setting this.state.user to appropriate user, setting this.state.token to appropriate token, setting the localStorage.token to the token key we got back
-        .then((result) => this.handleResponse(result));
+        .then((result) => {
+          this.handleResponse(result);
+          return true;
+        });
     }
   };
 
@@ -128,6 +130,9 @@ class App extends React.Component {
       case "high-to-low":
         items.sort((a, b) => b.price - a.price);
         break;
+      case "location":
+        items.sort((a, b) => a.user.distance - b.user.distance);
+        break;
       default:
         items.sort((a, b) => a.id - b.id);
     }
@@ -136,9 +141,71 @@ class App extends React.Component {
     return items;
   };
 
-  // filterItems takes in an array of filter criteria and
+  // function that gets the current user's coordinates
+  getVisitorsLocation = () => {
+    if (navigator.geolocation) {
+      console.log("Inside getVisitorsLocation");
+      return navigator.geolocation.getCurrentPosition(this.getLocation);
+    } else {
+      return "Geolocation is not supported by this browser.";
+    }
+  };
+
+  getLocation = (position) => {
+    const { latitude, longitude } = position.coords;
+
+    this.setDistance(latitude, longitude);
+  };
+
+  // takes in visitor's latitude and longitude, and change state of items so that each item's user's distance is set to the distance between the user and the visitor
+  setDistance(vLatitude, vLongitude) {
+    const copyItems = JSON.parse(JSON.stringify(this.state.items));
+    const items = copyItems.map((item) => {
+      const sLatitude = item.user.latitude;
+      const sLongitude = item.user.longitude;
+
+      item.user.distance = this.distanceBetweenCoordinates(
+        vLatitude,
+        vLongitude,
+        sLatitude,
+        sLongitude
+      );
+
+      return item;
+    });
+
+    this.setState({ items });
+  }
+
+  distanceBetweenCoordinates = (lat1, lon1, lat2, lon2, unit) => {
+    if (lat1 === lat2 && lon1 === lon2) {
+      return 0;
+    } else {
+      var radlat1 = (Math.PI * lat1) / 180;
+      var radlat2 = (Math.PI * lat2) / 180;
+      var theta = lon1 - lon2;
+      var radtheta = (Math.PI * theta) / 180;
+      var dist =
+        Math.sin(radlat1) * Math.sin(radlat2) +
+        Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
+      if (dist > 1) {
+        dist = 1;
+      }
+      dist = Math.acos(dist);
+      dist = (dist * 180) / Math.PI;
+      dist = dist * 60 * 1.1515;
+      if (unit === "K") {
+        dist = dist * 1.609344;
+      }
+      if (unit === "N") {
+        dist = dist * 0.8684;
+      }
+      return Math.round(dist);
+    }
+  };
 
   render() {
+    this.getVisitorsLocation();
     // If localStorage has key "token" that points to something that is not an empty string, then we are logged in
     const loggedIn = localStorage.getItem("token");
 
@@ -192,6 +259,7 @@ class App extends React.Component {
             exact
             path="/new-item"
             addOrRemoveItem={this.addOrRemoveItem}
+            getVisitorsLocation={this.getVisitorsLocation}
             component={NewItemPage}
           />
 

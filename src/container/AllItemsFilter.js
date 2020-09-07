@@ -1,4 +1,5 @@
 import React from "react";
+import "../styling/AllItemsFilter.css";
 
 class AllItemsFilter extends React.Component {
   handleChange = (e) => {
@@ -6,6 +7,7 @@ class AllItemsFilter extends React.Component {
     const {
       setSort,
       setCategory,
+      setCondition,
       addToAvailability,
       removeFromAvailability,
     } = this.props;
@@ -14,6 +16,8 @@ class AllItemsFilter extends React.Component {
       setSort(value);
     } else if (name === "category") {
       setCategory(value);
+    } else if (name === "condition") {
+      setCondition(value);
     } else {
       checked ? addToAvailability(name) : removeFromAvailability(name);
     }
@@ -21,9 +25,10 @@ class AllItemsFilter extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="all-items-filter-container">
+        <h4 className="ui header">Sort or Filter</h4>
         <div className="field">
-          <label>Sort Equipment:</label>
+          <div className="subheading">Sort Equipment:</div>
           <select
             className="ui fluid dropdown"
             name="sort"
@@ -36,8 +41,8 @@ class AllItemsFilter extends React.Component {
           </select>
         </div>
 
-        <div>
-          <div>Filter by Availability:</div>
+        <div className="field">
+          <div className="subheading">Filter by Availability:</div>
           <div className="ui slider checkbox">
             <input
               type="checkbox"
@@ -50,25 +55,40 @@ class AllItemsFilter extends React.Component {
             <input type="checkbox" name="pickup" onChange={this.handleChange} />
             <label>Pickup</label>
           </div>
+        </div>
 
-          <div className="field">
-            <label>Filter by Category: </label>
-            <select
-              className="ui fluid dropdown"
-              name="category"
-              onChange={this.handleChange}
-            >
-              <option value="">Select Category</option>
-              <option value="Wheelchairs & Scooters">
-                Wheelchairs & Scooters
-              </option>
-              <option value="Walking Aids">Walking Aids</option>
-              <option value="Beds & Lifts">Beds & Lifts</option>
-              <option value="Bath & Shower">Bath & Shower</option>
-              <option value="Pediatrics">Pediatrics</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
+        <div className="field">
+          <div className="subheading">Filter by Category: </div>
+          <select
+            className="ui fluid dropdown"
+            name="category"
+            onChange={this.handleChange}
+          >
+            <option value="">Select Category</option>
+            <option value="Wheelchairs & Scooters">
+              Wheelchairs & Scooters
+            </option>
+            <option value="Walking Aids">Walking Aids</option>
+            <option value="Beds & Lifts">Beds & Lifts</option>
+            <option value="Bath & Shower">Bath & Shower</option>
+            <option value="Pediatrics">Pediatrics</option>
+            <option value="Other">Other</option>
+          </select>
+        </div>
+
+        <div className="field">
+          <div className="subheading">Filter by Condition: </div>
+          <select
+            className="ui fluid dropdown"
+            name="condition"
+            onChange={this.handleChange}
+          >
+            <option value="">Select Condition</option>
+            <option value="New">New</option>
+            <option value="Like New">Like New</option>
+            <option value="Good">Good</option>
+            <option value="Worn">Worn</option>
+          </select>
         </div>
       </div>
     );

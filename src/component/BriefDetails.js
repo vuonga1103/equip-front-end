@@ -11,7 +11,8 @@ const BriefDetails = ({ item }) => {
       </div>
       <div className="meta">
         <span>
-          {item.user.city}, {item.user.state}, {item.user.zip}
+          {item.user.city}, {item.user.state}{" "}
+          {item.user.distance ? `(${item.user.distance} mi away)` : null}
         </span>
       </div>
     </div>

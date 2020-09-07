@@ -27,6 +27,27 @@ class RegisterPage extends React.Component {
       if (attr !== "password_confirm") newUser[attr] = this.state[attr];
     }
 
+    this.addLongAndLat(newUser);
+  };
+
+  //function that takes in a newUser object without long and lat, use the newUser.zip to turn to lat and long, add it to the user, then call a fetch to send the newUser's data to backend
+  addLongAndLat = (newUser) => {
+    const zip = newUser.zip;
+    const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${zip}&key=${API_KEY}
+    `;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((result) => {
+        newUser.latitude = result.results[0].geometry.location.lat;
+        newUser.longitude = result.results[0].geometry.location.lng;
+        this.persistNewUser(newUser);
+        return true;
+      });
+  };
+
+  persistNewUser = (newUser) => {
     fetch("http://localhost:4000/users", {
       method: "POST",
       headers: {
@@ -42,6 +63,7 @@ class RegisterPage extends React.Component {
         if (this.props.handleResponse(result)) {
           this.props.history.push("/home");
         }
+        return true;
       });
   };
 
@@ -181,7 +203,7 @@ class RegisterPage extends React.Component {
         <div className="field">
           <label>Zip Code</label>
           <input
-            type="number"
+            type="text"
             name="zip"
             placeholder="Zip Code"
             value={zip}

@@ -5,11 +5,13 @@
   margin-top: 20px;
 }
 
-/* #seller-page-container .sixteen.wide.column {
+#seller-page-container .four.wide.column {
+  padding: 20px;
+  text-align: left;
+  color: rgb(58, 57, 57);
 }
 
-#seller-page-container .ten.wide.column {
+#seller-page-container .four.wide.column button {
+  font-size: 16px;
+  margin-bottom: 20px;
 }
-
-#seller-page-container .six.wide.column {
-} */

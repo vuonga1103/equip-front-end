@@ -1,6 +1,7 @@
 import React from "react";
 import "../styling/ItemPage.css";
 import { withRouter } from "react-router-dom";
+import Map from "../component/Map";
 
 class ItemPage extends React.Component {
   state = {
@@ -24,6 +25,7 @@ class ItemPage extends React.Component {
         } else {
           this.props.history.push("/not-found");
         }
+        return true;
       });
   };
 
@@ -45,42 +47,52 @@ class ItemPage extends React.Component {
 
     return (
       <div className="ui grid container" id="item-page-container">
-        <div className="six wide column">
+        <div className="six wide column" id="photo-container">
           <div className="ui card raised segment">
             <div className="image">
               <img src={photo} alt={name} />
             </div>
             <div className="content">
               <div className="description">Seller: {username}</div>
-              <div className="description">
-                {city}, {state}, {zip}
-              </div>
+
               <div className="description">
                 <a
                   href={`mailto:${email}?subject=Equip%20Inquiry%20Re:%20${name}&body=Hi!%20I%20am%20interested%20in%20your%20posted%20item:%20${name}`}
                 >
-                  Contact Seller
+                  <div className="ui primary button">Contact Seller</div>
                 </a>
               </div>
             </div>
           </div>
         </div>
-        <div className="ten wide column ui raised segment">
+        <div className="ten wide column ui" id="description-container">
           <h1 className="ui header">
-            {name.toUpperCase()} ({condition})
+            {name} ({condition})
           </h1>
-          <h3 className="ui header">{price ? `$${price}` : `Free`}</h3>
+          <h2 className="ui header price">{price ? `$${price}` : `Free`}</h2>
           <p className="info">
-            <b>Description: </b>
-            {description}
-            <br />
-            <br />
-            {pickup ? "✔️ Available for Pickup " : null}
-            {shipping ? "✔️ Available for Shipping " : null}
-            <br />
-            <br />
-            <b>Category: </b> {category}
+            <div>
+              <b>Description: </b>
+              {description}
+            </div>
+
+            <div>
+              <b>Available For: </b>
+
+              {pickup ? "✔️ Pickup " : null}
+              {pickup && shipping ? " " : null}
+              {shipping ? "✔️ Shipping " : null}
+            </div>
+
+            <div>
+              <b>Category: </b> {category}
+            </div>
+
+            <div>
+              <b>Location: </b> {city}, {state}, {zip}
+            </div>
           </p>
+          <Map user={this.state.item.user} zoomLevel={11} />
         </div>
       </div>
     );

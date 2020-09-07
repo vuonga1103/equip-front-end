@@ -7,6 +7,7 @@ class ItemsPage extends React.Component {
   state = {
     sort: "",
     category: "",
+    condition: "",
     availability: [],
   };
 
@@ -17,6 +18,10 @@ class ItemsPage extends React.Component {
 
   setCategory = (category) => {
     this.setState({ category });
+  };
+
+  setCondition = (condition) => {
+    this.setState({ condition });
   };
 
   addToAvailability = (val) => {
@@ -31,11 +36,14 @@ class ItemsPage extends React.Component {
   };
 
   renderItems = () => {
-    const { category, availability } = this.state;
+    const { category, condition, availability } = this.state;
 
-    let filteredItems = this.props.items.filter((i) =>
-      i.category.includes(category)
-    );
+    let filteredItems = this.props.items
+      .filter((i) => i.category.includes(category))
+      .filter((i) => {
+        if (condition === "") return i;
+        return i.condition === condition;
+      });
 
     availability.forEach((filterVal) => {
       filteredItems = filteredItems.filter((item) => item[filterVal]);
@@ -59,6 +67,7 @@ class ItemsPage extends React.Component {
           <AllItemsFilter
             setSort={this.setSort}
             setCategory={this.setCategory}
+            setCondition={this.setCondition}
             addToAvailability={this.addToAvailability}
             removeFromAvailability={this.removeFromAvailability}
           />

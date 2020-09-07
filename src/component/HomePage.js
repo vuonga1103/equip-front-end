@@ -8,12 +8,12 @@ const HomePage = ({ user }) => {
       <h2 className="ui header">Welcome to Equip, {user.username}!</h2>
 
       <h4 className="ui header">What Would You Like To Do?</h4>
-      <Link to={"/"}>
-        <button className="fluid ui button primary">Shop All Items</button>
-      </Link>
-
       <Link to={"/seller"}>
         <button className="fluid ui button primary">View My Items</button>
+      </Link>
+
+      <Link to={"/"}>
+        <button className="fluid ui button primary">Shop All Items</button>
       </Link>
 
       <Link to={"/edit"}>

@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 
 const Banner = ({ loggedIn }) => {
   return (
-    <div className="ui header">
-      <Link to={loggedIn ? "/home" : "/"}>
-        <div className="logo">
+    <div className="ui header" id="banner-container">
+      <div className="logo">
+        <Link to={loggedIn ? "/home" : "/"}>
           <span className="logo-img">
             <img
               src="https://img.icons8.com/cotton/150/000000/electric-wheelchair.png"
@@ -15,12 +15,12 @@ const Banner = ({ loggedIn }) => {
           </span>
 
           <span className="logo-text">equip</span>
-        </div>
-      </Link>
-
-      <div className="tagline">
-        An Online Marketplace for New and Used Durable Medical Equipment
+        </Link>
       </div>
+
+      {/* <div className="tagline">
+        An Online Marketplace for New and Used Durable Medical Equipment
+      </div> */}
     </div>
   );
 };

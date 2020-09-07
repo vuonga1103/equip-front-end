@@ -1,0 +1,10 @@
+#not-found-container {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+
+#not-found-container .segment {
+  padding: 35px;
+}
