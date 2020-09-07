@@ -2,10 +2,10 @@ import React from "react";
 import "../styling/HomePage.css";
 import { Link } from "react-router-dom";
 
-const HomePage = ({ user }) => {
+const HomePage = ({ user: { username } }) => {
   return (
     <div className="buttons-container">
-      <h2 className="ui header">Welcome to Equip, {user.username}!</h2>
+      <h2 className="ui header">Welcome to Equip, {username}!</h2>
 
       <h4 className="ui header">What Would You Like To Do?</h4>
       <Link to={"/seller"}>

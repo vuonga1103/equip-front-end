@@ -2,6 +2,7 @@ import React from "react";
 import "../styling/AllItemsFilter.css";
 
 class AllItemsFilter extends React.Component {
+  // Handles change of sorting/filtering inputs; calls function to change states of sort, category, condition, availability in ItemsPage based on what user inputted
   handleChange = (e) => {
     const { name, value, checked } = e.target;
     const {
@@ -12,14 +13,19 @@ class AllItemsFilter extends React.Component {
       removeFromAvailability,
     } = this.props;
 
-    if (name === "sort") {
-      setSort(value);
-    } else if (name === "category") {
-      setCategory(value);
-    } else if (name === "condition") {
-      setCondition(value);
-    } else {
-      checked ? addToAvailability(name) : removeFromAvailability(name);
+    switch (name) {
+      case "sort":
+        setSort(value);
+        break;
+      case "category":
+        setCategory(value);
+        break;
+      case "condition":
+        setCondition(value);
+        break;
+      default:
+        // Default is shipping/pickup availability
+        checked ? addToAvailability(name) : removeFromAvailability(name);
     }
   };
 

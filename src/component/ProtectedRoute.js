@@ -1,19 +1,18 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
 
-// Custom created ProtectedRoute that takes in props component, path, and possibly misc. other props. Create a Route component to return, with the path leading to path passed in; and render with a callback function that will return the passed in component if we are logged in, or will redirect back to "/" if we are not
+// Custom created ProtectedRoute that takes in props component, path, and possibly misc. other props.
 const ProtectedRoute = ({ component: Comp, path, ...rest }) => {
+  // User is logged in if there is a detected token in localStorage
+  const loggedIn = !!localStorage.getItem("token");
+
+  // Create a Route component to return
   return (
     <Route
+      // The path of the route is the path passed into ProtectedRoute as props
       path={path}
-      {...rest}
-      render={(props) => {
-        return localStorage.getItem("token") ? (
-          <Comp {...props} {...rest} />
-        ) : (
-          <Redirect to="/" />
-        );
-      }}
+      // Rendering call back function that will return the component that was passed into ProtectedRoute if user is logged in; will redirect user to root page if not logged in
+      render={() => (loggedIn ? <Comp {...rest} /> : <Redirect to="/" />)}
     />
   );
 };

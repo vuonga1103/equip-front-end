@@ -47,6 +47,7 @@ class ItemPage extends React.Component {
 
     return (
       <div className="ui grid container" id="item-page-container">
+        {/* Container with the photo and Contact Seller button */}
         <div className="six wide column" id="photo-container">
           <div className="ui card raised segment">
             <div className="image">
@@ -56,6 +57,7 @@ class ItemPage extends React.Component {
               <div className="description">Seller: {username}</div>
 
               <div className="description">
+                {/* When Contact Seller button is clicked, will open email with subject template: "Equip Inquiry Re: <Item Name>" and body of "Hi! I am interested in your posted item: <Item Name>" */}
                 <a
                   href={`mailto:${email}?subject=Equip%20Inquiry%20Re:%20${name}&body=Hi!%20I%20am%20interested%20in%20your%20posted%20item:%20${name}`}
                 >
@@ -65,12 +67,13 @@ class ItemPage extends React.Component {
             </div>
           </div>
         </div>
+        {/* Container with item's descriptions and map */}
         <div className="ten wide column ui" id="description-container">
           <h1 className="ui header">
             {name} ({condition})
           </h1>
           <h2 className="ui header price">{price ? `$${price}` : `Free`}</h2>
-          <p className="info">
+          <div className="info">
             <div>
               <b>Description: </b>
               {description}
@@ -91,8 +94,9 @@ class ItemPage extends React.Component {
             <div>
               <b>Location: </b> {city}, {state}, {zip}
             </div>
-          </p>
-          <Map user={this.state.item.user} zoomLevel={11} />
+          </div>
+
+          <Map user={this.state.item.user} zoomLevel={12} />
         </div>
       </div>
     );

@@ -14,6 +14,7 @@ class SellerPage extends React.Component {
     this.getUserItems();
   }
 
+  // Fetch database for all items that belong to the user and set them in this.state.userItems
   getUserItems() {
     fetch("http://localhost:4000/user-items", {
       headers: {
@@ -23,14 +24,17 @@ class SellerPage extends React.Component {
       .then((response) => response.json())
       .then((userItems) => {
         this.setState({ userItems });
+        return true;
       });
   }
 
+  // Is called in MyItemsFilter, when the user selects a filter option for sold or not-sold; set this.state.soldFilter to whatever the user selected
   setFilter = (e) => {
     const soldFilter = e.target.value;
     this.setState({ soldFilter });
   };
 
+  // Displays the user's items, filtering for the soldFilter state
   renderUserItems = () => {
     let myFilteredItems = this.state.userItems;
 
@@ -47,6 +51,7 @@ class SellerPage extends React.Component {
         <Item
           key={i.id}
           item={i}
+          // Passing on addOrRemoveItem prop, which will add or remove the item from root page depending on its sold status
           addOrRemoveItem={this.props.addOrRemoveItem}
         />
       );
@@ -57,17 +62,21 @@ class SellerPage extends React.Component {
     return (
       <div className="ui grid container" id="seller-page-container">
         <div className="four wide column">
+          {/* Button to add new item */}
           <Link to={"/new-item"}>
             <button className="fluid ui button primary">
               Add New Item For Sale
             </button>
           </Link>
+
+          {/* Filter for sold or unsold items */}
           <MyItemsFilter
             soldFilter={this.state.soldFilter}
             setFilter={this.setFilter}
           />
         </div>
         <div className="twelve wide column">
+          {/* Display of the logged in user's items */}
           <div className="ui three column grid">{this.renderUserItems()}</div>
         </div>
       </div>

@@ -17,8 +17,10 @@ import ProtectedRoute from "../component/ProtectedRoute";
 
 class App extends React.Component {
   state = {
+    // All unsold items in {..., user: {...}} format
     items: [],
 
+    // Current logged in user
     user: {
       id: "",
       username: "",
@@ -28,13 +30,15 @@ class App extends React.Component {
       email: "",
     },
 
+    // Current logged in user's token
     token: "",
   };
 
   componentDidMount() {
+    // Make fetch to get items not sold
     this.getItems();
 
-    // If the user previously logged in, we want the user to stay logged in
+    // If the user previously logged in, they should stay logged in
     this.persistLoggedInUser();
   }
 
@@ -48,6 +52,9 @@ class App extends React.Component {
       });
   };
 
+  // *****************************************************************************
+  // ************ FUNCTIONS THAT HANDLE PERSIST, LOG-IN, LOG-OUT *****************
+  // *****************************************************************************
   // If the user has previously logged in, make a request to /persist, sending the token stored in localStorage. Backend takes care of decoding the token, sends back result in the form of a { user: {}, token: "..."} object
   persistLoggedInUser = () => {
     if (localStorage.token) {
@@ -78,7 +85,7 @@ class App extends React.Component {
     }
   };
 
-  // Takes in an object containing keys user and token, reset state accordingly
+  // Takes in an object containing keys user and token, set this.state accordinly
   setUser = ({ user, token }) => this.setState({ user, token });
 
   // Rid the localStorage of the token, reset this.state.user and this.state.token; bring the user to root page, and alert them that they have been logged out
@@ -102,12 +109,16 @@ class App extends React.Component {
     alert("Log Out Successful!");
   };
 
-  // Return an array of the current logged in user's items (items that they are selling)
+  // *****************************************************************************
+  // ******************* RE-SETTING this.state.items functions *******************
+  // *****************************************************************************
+
+  // Returns an array of the current logged in user's items (items that they are selling)
   usersItems = () => {
     return this.state.items.filter((i) => i.user.id === this.state.user.id);
   };
 
-  // Takes in an item object, if that object's sold is set to false, then set this.state.items to include that object; otherwise set this.state.items to not include that item
+  // Takes in an item object, accordingly to whether the object's "sold" attribute is set to false or true, to set this.state.items to include or exclude that item (i.e. if the seller marks the item as sold, we don't want to display it in root page)
   addOrRemoveItem = (item) => {
     let items;
     if (!item.sold) {
@@ -118,8 +129,7 @@ class App extends React.Component {
     this.setState({ items });
   };
 
-  // takes in a sort criteria ("low-to-high", "high-to-low", or "location"), sort this.state.items, and set the state
-
+  // Takes in a sort criteria ("low-to-high", "high-to-low", or "location"), sort this.state.items accordingly
   sortItems = (criteria) => {
     let items = [...this.state.items];
 
@@ -141,29 +151,38 @@ class App extends React.Component {
     return items;
   };
 
-  // function that gets the current user's coordinates
+  // *****************************************************************************
+  // *************************** GEOLOCATION FUNCTIONS ***************************
+  // *****************************************************************************
+
+  // Is called with render(), if the visitor enables geolocation, then call .getCurrentPosition() with callback getLocation()
   getVisitorsLocation = () => {
     if (navigator.geolocation) {
-      console.log("Inside getVisitorsLocation");
       return navigator.geolocation.getCurrentPosition(this.getLocation);
     } else {
       return "Geolocation is not supported by this browser.";
     }
   };
 
+  // getLocation() has access to position, from which latitude and longitude could be obtained; using these values, we can add an attribute called distance to the state of each of the user in this.state.users array; this is going to be set to the distance between the current visitor and the seller of each item
   getLocation = (position) => {
     const { latitude, longitude } = position.coords;
 
     this.setDistance(latitude, longitude);
   };
 
-  // takes in visitor's latitude and longitude, and change state of items so that each item's user's distance is set to the distance between the user and the visitor
+  // Takes in current visitor's latitude and longitude obtained from built in navigator.geolocation and change state of items so that each item's user's distance is set to the distance between the user and the visitor
   setDistance(vLatitude, vLongitude) {
+    // Make a deep copy of this.state.items to avoid mutating anything
     const copyItems = JSON.parse(JSON.stringify(this.state.items));
+
+    // Map through the copy of items
     const items = copyItems.map((item) => {
+      // Seller's latitude and longitude can be obtained directly from each item's user object
       const sLatitude = item.user.latitude;
       const sLongitude = item.user.longitude;
 
+      // Call .distanceBetweenCoordinates(), which takes in the visitor's lat and lng coords and the seller's lat and lng coords and returns the distance in miles; then create a new key in item.user called distance and assigning it the result
       item.user.distance = this.distanceBetweenCoordinates(
         vLatitude,
         vLongitude,
@@ -174,9 +193,11 @@ class App extends React.Component {
       return item;
     });
 
+    // Set this.state.items; now each item's user will have a key of 'distance' pointing to the distance between the seller of that object and the current visitor
     this.setState({ items });
   }
 
+  // Function to calculate distancce between two coordinates, obtained from https://www.geodatasource.com/developers/javascript; this is to avoid making another API request
   distanceBetweenCoordinates = (lat1, lon1, lat2, lon2, unit) => {
     if (lat1 === lat2 && lon1 === lon2) {
       return 0;
@@ -204,9 +225,13 @@ class App extends React.Component {
     }
   };
 
+  // *****************************************************************************
+  // *****************************************************************************
+
   render() {
-    this.getVisitorsLocation();
-    // If localStorage has key "token" that points to something that is not an empty string, then we are logged in
+    this.getVisitorsLocation(); // get the visitor's location on page render
+
+    // If localStorage has key "token" that points to something that is not an empty string, then we are logged in; loggedIn var is used to determine where we should direct user if they visit /login and /register
     const loggedIn = localStorage.getItem("token");
 
     return (
@@ -219,6 +244,7 @@ class App extends React.Component {
 
           <Route path="/about" exact component={AboutPage} />
 
+          {/* If user is already logged in, then should be redirected to root page when they try to go to /login, if not, let they go to /login */}
           <Route path="/login" exact>
             {loggedIn ? (
               <Redirect to="/" />
@@ -238,6 +264,9 @@ class App extends React.Component {
             )}
           </Route>
 
+          {/*********************************************************/}
+          {/***** These routes require the user to be logged in *****/}
+          {/*********************************************************/}
           <ProtectedRoute exact path="/edit" component={EditPage} />
 
           <ProtectedRoute
@@ -262,6 +291,8 @@ class App extends React.Component {
             getVisitorsLocation={this.getVisitorsLocation}
             component={NewItemPage}
           />
+          {/*********************************************************/}
+          {/*********************************************************/}
 
           <Route path="/not-found" exact component={NotFoundPage} />
 
@@ -269,6 +300,7 @@ class App extends React.Component {
             <ItemsPage items={this.state.items} sortItems={this.sortItems} />
           </Route>
 
+          {/* Catch-all for if none of the routes above matches */}
           <Route path="*" component={NotFoundPage} />
         </Switch>
       </div>
