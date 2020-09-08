@@ -10,6 +10,7 @@ import ItemsPage from "./ItemsPage";
 import LogInPage from "./LogInPage";
 import RegisterPage from "./RegisterPage";
 import EditPage from "./EditPage";
+import EditPasswordPage from "./EditPasswordPage";
 import SellerPage from "./SellerPage";
 import NewItemPage from "./NewItemPage";
 import NotFoundPage from "../component/NotFoundPage";
@@ -17,7 +18,7 @@ import ProtectedRoute from "../component/ProtectedRoute";
 
 class App extends React.Component {
   state = {
-    // All unsold items in {..., user: {...}} format
+    // All unsold items in [{..., user: {...}}, {..., user: {...}}, ...] format
     items: [],
 
     // Current logged in user
@@ -53,7 +54,7 @@ class App extends React.Component {
   };
 
   // *****************************************************************************
-  // ************ FUNCTIONS THAT HANDLE PERSIST, LOG-IN, LOG-OUT *****************
+  // ************ FX'S THAT HANDLE USER PERSIST, LOG-IN, LOG-OUT *****************
   // *****************************************************************************
   // If the user has previously logged in, make a request to /persist, sending the token stored in localStorage. Backend takes care of decoding the token, sends back result in the form of a { user: {}, token: "..."} object
   persistLoggedInUser = () => {
@@ -109,23 +110,85 @@ class App extends React.Component {
     alert("Log Out Successful!");
   };
 
+  // Takes in a user object initially without longitude and latitude added, use the user's to make an API request to geocode, get back the longitude and latitude, assign them to the user, then depending on whether the user is registering or is just editing their account, to call either persistNewUser() or updateUser()
+  addLongAndLat = (user) => {
+    const zip = user.zip;
+    const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+    const url = `https://maps.googleapis.com/maps/api/geocode/json?address=${zip}&key=${API_KEY}
+    `;
+
+    fetch(url)
+      .then((response) => response.json())
+      .then((result) => {
+        user.latitude = result.results[0].geometry.location.lat;
+        user.longitude = result.results[0].geometry.location.lng;
+
+        const pathname = this.props.location.pathname;
+
+        if (pathname === "/register") {
+          this.persistNewUser(user);
+        } else if (pathname === "/edit") {
+          this.updateUser(user);
+        }
+        return true;
+      });
+  };
+
+  // Persist the new user to the database and then take user home
+  persistNewUser = (newUser) => {
+    fetch("http://localhost:4000/users", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        if (this.handleResponse(result)) {
+          this.props.history.push("/home");
+        }
+        return true;
+      });
+  };
+
+  // Update the user in the database, then take user home
+  updateUser = (user) => {
+    fetch("http://localhost:4000/users/" + user.id, {
+      method: "PATCH",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        Authorization: `bearer ${localStorage.token}`,
+      },
+      body: JSON.stringify(user),
+    })
+      .then((response) => response.json())
+      .then((result) => {
+        this.handleResponse(result);
+        this.props.history.push("/home");
+        this.getVisitorsLocation();
+
+        alert("Account successfully updated!");
+        return true;
+      });
+  };
+
   // *****************************************************************************
-  // ******************* RE-SETTING this.state.items functions *******************
+  // ******************* RE-SETTING this.state.items FUNCTIONS *******************
   // *****************************************************************************
 
   // Returns an array of the current logged in user's items (items that they are selling)
-  usersItems = () => {
-    return this.state.items.filter((i) => i.user.id === this.state.user.id);
-  };
+  usersItems = () =>
+    this.state.items.filter((i) => i.user.id === this.state.user.id);
 
   // Takes in an item object, accordingly to whether the object's "sold" attribute is set to false or true, to set this.state.items to include or exclude that item (i.e. if the seller marks the item as sold, we don't want to display it in root page)
   addOrRemoveItem = (item) => {
-    let items;
-    if (!item.sold) {
-      items = [...this.state.items, item];
-    } else {
-      items = this.state.items.filter((i) => i.id !== item.id);
-    }
+    const items = item.sold
+      ? this.state.items.filter((i) => i.id !== item.id)
+      : [...this.state.items, item];
+
     this.setState({ items });
   };
 
@@ -157,17 +220,16 @@ class App extends React.Component {
 
   // Is called with render(), if the visitor enables geolocation, then call .getCurrentPosition() with callback getLocation()
   getVisitorsLocation = () => {
-    if (navigator.geolocation) {
-      return navigator.geolocation.getCurrentPosition(this.getLocation);
-    } else {
-      return "Geolocation is not supported by this browser.";
-    }
+    console.log("inside visitor's location");
+    return navigator.geolocation
+      ? navigator.geolocation.getCurrentPosition(this.getLocation)
+      : "Geolocation is not supported by this browser.";
   };
 
   // getLocation() has access to position, from which latitude and longitude could be obtained; using these values, we can add an attribute called distance to the state of each of the user in this.state.users array; this is going to be set to the distance between the current visitor and the seller of each item
   getLocation = (position) => {
+    console.log("Location gotten");
     const { latitude, longitude } = position.coords;
-
     this.setDistance(latitude, longitude);
   };
 
@@ -202,11 +264,11 @@ class App extends React.Component {
     if (lat1 === lat2 && lon1 === lon2) {
       return 0;
     } else {
-      var radlat1 = (Math.PI * lat1) / 180;
-      var radlat2 = (Math.PI * lat2) / 180;
-      var theta = lon1 - lon2;
-      var radtheta = (Math.PI * theta) / 180;
-      var dist =
+      const radlat1 = (Math.PI * lat1) / 180;
+      const radlat2 = (Math.PI * lat2) / 180;
+      const theta = lon1 - lon2;
+      const radtheta = (Math.PI * theta) / 180;
+      let dist =
         Math.sin(radlat1) * Math.sin(radlat2) +
         Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
       if (dist > 1) {
@@ -229,7 +291,7 @@ class App extends React.Component {
   // *****************************************************************************
 
   render() {
-    this.getVisitorsLocation(); // get the visitor's location on page render
+    this.getVisitorsLocation(); // Get the visitor's location on page render
 
     // If localStorage has key "token" that points to something that is not an empty string, then we are logged in; loggedIn var is used to determine where we should direct user if they visit /login and /register
     const loggedIn = localStorage.getItem("token");
@@ -260,14 +322,28 @@ class App extends React.Component {
             {loggedIn ? (
               <Redirect to="/" />
             ) : (
-              <RegisterPage handleResponse={this.handleResponse} />
+              <RegisterPage addLongAndLat={this.addLongAndLat} />
             )}
           </Route>
 
           {/*********************************************************/}
           {/***** These routes require the user to be logged in *****/}
           {/*********************************************************/}
-          <ProtectedRoute exact path="/edit" component={EditPage} />
+          <ProtectedRoute
+            exact
+            path="/edit"
+            user={this.state.user}
+            addLongAndLat={this.addLongAndLat}
+            component={EditPage}
+          />
+
+          <ProtectedRoute
+            exact
+            path="/edit-password"
+            user={this.state.user}
+            // addLongAndLat={this.addLongAndLat}
+            component={EditPasswordPage}
+          />
 
           <ProtectedRoute
             exact

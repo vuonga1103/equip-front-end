@@ -4,9 +4,7 @@ import { withRouter } from "react-router-dom";
 import Map from "../component/Map";
 
 class ItemPage extends React.Component {
-  state = {
-    item: null,
-  };
+  state = { item: null };
 
   // Once component mounts, make a fetch for the item with the id we get from this.props.match.params.id, which is something we get for free from the Route (/item-page/:id); also we are able to access additional props thanks to withRouter from "react-router-dom"
   componentDidMount() {

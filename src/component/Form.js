@@ -1,11 +1,14 @@
 import React from "react";
+import { useLocation, Link } from "react-router-dom";
 
 const Form = (props) => {
   const {
-    user: { username, password, password_confirm, city, state, zip, email },
+    user: { username, password, passwordConfirm, city, state, zip, email },
     handleSubmit,
     handleInput,
   } = props;
+
+  const location = useLocation();
 
   return (
     <form
@@ -14,7 +17,9 @@ const Form = (props) => {
       onChange={handleInput}
       onSubmit={handleSubmit}
     >
-      <h4 className="ui dividing header">Register</h4>
+      <h4 className="ui dividing header">
+        {location.pathname === "/register" ? "Register" : "Edit Your Info"}
+      </h4>
 
       <div className="field">
         <label>Username</label>
@@ -38,27 +43,30 @@ const Form = (props) => {
         />
       </div>
 
-      <div className="field">
-        <label>Password</label>
-        <input
-          type="password"
-          name="password"
-          placeholder="Password"
-          value={password}
-          required
-        />
-      </div>
-
-      <div className="field">
-        <label>Confirm Password</label>
-        <input
-          type="password"
-          name="password_confirm"
-          placeholder="Confirm Password"
-          value={password_confirm}
-          required
-        />
-      </div>
+      {location.pathname === "/register" ? (
+        <>
+          <div className="field">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              required
+            />
+          </div>
+          <div className="field">
+            <label>Confirm Password</label>
+            <input
+              type="password"
+              name="passwordConfirm"
+              placeholder="Confirm Password"
+              value={passwordConfirm}
+              required
+            />
+          </div>
+        </>
+      ) : null}
 
       <div className="field">
         <label>City</label>
@@ -140,7 +148,13 @@ const Form = (props) => {
         />
       </div>
 
-      <input type="Submit" value="Register" className="ui submit button" />
+      <input type="Submit" value="Submit" className="ui submit button" />
+
+      <div id="edit-password">
+        {location.pathname === "/edit" ? (
+          <Link to="/edit-password">Reset Password</Link>
+        ) : null}
+      </div>
     </form>
   );
 };
