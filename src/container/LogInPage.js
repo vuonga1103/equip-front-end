@@ -1,6 +1,7 @@
 import React from "react";
 import "../styling/LogInPage.css";
 import { withRouter } from "react-router-dom";
+import BackButton from "../component/BackButton";
 
 class LogInPage extends React.Component {
   state = {
@@ -39,32 +40,36 @@ class LogInPage extends React.Component {
     const { password, username } = this.state;
 
     return (
-      <form className="ui form" id="log-in-form" onSubmit={this.handleSubmit}>
-        <h4 className="ui dividing header">Log In</h4>
-        <div className="field">
-          <label>Username</label>
-          <input
-            type="text"
-            name="username"
-            placeholder="Username"
-            value={username}
-            onChange={this.handleInput}
-          />
-        </div>
-        <div className="field">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="Password"
-            value={password}
-            onChange={this.handleInput}
-          />
-        </div>
-        <button className="ui button" type="submit">
-          Log In
-        </button>
-      </form>
+      <>
+        <form className="ui form" id="log-in-form" onSubmit={this.handleSubmit}>
+          <h4 className="ui dividing header">Log In</h4>
+          <div className="field">
+            <label>Username</label>
+            <input
+              type="text"
+              name="username"
+              placeholder="Username"
+              value={username}
+              onChange={this.handleInput}
+            />
+          </div>
+          <div className="field">
+            <label>Password</label>
+            <input
+              type="password"
+              name="password"
+              placeholder="Password"
+              value={password}
+              onChange={this.handleInput}
+            />
+          </div>
+          <button className="ui button" type="submit">
+            Log In
+          </button>
+        </form>
+
+        <BackButton />
+      </>
     );
   }
 }

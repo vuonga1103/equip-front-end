@@ -1,6 +1,7 @@
 import React from "react";
 import "../styling/EditPasswordPage.css";
 import { withRouter } from "react-router-dom";
+import BackButton from "../component/BackButton";
 
 class EditPasswordPage extends React.Component {
   state = {
@@ -134,6 +135,9 @@ class EditPasswordPage extends React.Component {
           />
         </div>
         <input type="Submit" value="Submit" className="ui submit button" />
+        <br />
+        <br />
+        <BackButton />
       </form>
     );
   }

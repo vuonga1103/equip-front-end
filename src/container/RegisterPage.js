@@ -2,6 +2,7 @@ import React from "react";
 import "../styling/RegisterPage.css";
 import { withRouter } from "react-router-dom";
 import Form from "../component/Form";
+import BackButton from "../component/BackButton";
 
 class RegisterPage extends React.Component {
   state = {
@@ -34,11 +35,14 @@ class RegisterPage extends React.Component {
 
   render() {
     return (
-      <Form
-        user={this.state}
-        handleSubmit={this.handleSubmit}
-        handleInput={this.handleInput}
-      ></Form>
+      <>
+        <Form
+          user={this.state}
+          handleSubmit={this.handleSubmit}
+          handleInput={this.handleInput}
+        ></Form>
+        <BackButton />
+      </>
     );
   }
 }

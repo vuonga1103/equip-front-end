@@ -1,8 +1,9 @@
 import React from "react";
 import "../styling/SellerPage.css";
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 import Item from "./Item";
 import MyItemsFilter from "../component/MyItemsFilter";
+import BackButton from "../component/BackButton";
 
 class SellerPage extends React.Component {
   state = {
@@ -74,6 +75,7 @@ class SellerPage extends React.Component {
             soldFilter={this.state.soldFilter}
             setFilter={this.setFilter}
           />
+          <BackButton />
         </div>
         <div className="twelve wide column">
           {/* Display of the logged in user's items */}
@@ -84,4 +86,4 @@ class SellerPage extends React.Component {
   }
 }
 
-export default SellerPage;
+export default withRouter(SellerPage);

@@ -41,6 +41,12 @@
   object-fit: contain;
 }
 
-#item-page-container #photo-container #back-btn {
+#item-page-container #photo-container .back-btn {
+  position: relative;
+}
+
+#item-page-container #photo-container .back-btn img {
   cursor: pointer;
+  position: absolute;
+  margin-left: -13%;
 }

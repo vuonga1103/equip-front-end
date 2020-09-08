@@ -1,5 +1,6 @@
 import React from "react";
 import "../styling/AboutPage.css";
+import BackButton from "./BackButton";
 
 const AboutPage = () => {
   return (
@@ -85,6 +86,7 @@ const AboutPage = () => {
           Donate. Buy. Sell. Or spread the word today.
         </div>
       </div>
+      <BackButton />
     </div>
   );
 };

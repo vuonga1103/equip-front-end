@@ -15,3 +15,12 @@
   font-size: 16px;
   margin-bottom: 20px;
 }
+
+#seller-page-container .four.wide.column .back-btn {
+  margin-top: 10px;
+  text-align: center;
+}
+
+#seller-page-container .four.wide.column .back-btn img {
+  cursor: pointer;
+}

@@ -2,6 +2,7 @@ import React from "react";
 import "../styling/ItemPage.css";
 import { withRouter } from "react-router-dom";
 import Map from "../component/Map";
+import BackButton from "../component/BackButton";
 
 class ItemPage extends React.Component {
   state = { item: null };
@@ -64,12 +65,7 @@ class ItemPage extends React.Component {
               </div>
             </div>
           </div>
-          <div onClick={() => this.props.history.goBack()} id="back-btn">
-            <img
-              src="https://img.icons8.com/color/48/000000/circled-left-2.png"
-              alt="back arrow button"
-            />
-          </div>
+          <BackButton />
         </div>
         {/* Container with item's descriptions and map */}
         <div className="ten wide column ui" id="description-container">

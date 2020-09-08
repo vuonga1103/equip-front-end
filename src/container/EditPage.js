@@ -2,6 +2,7 @@ import React from "react";
 import "../styling/EditPage.css";
 import Form from "../component/Form";
 import { withRouter } from "react-router-dom";
+import BackButton from "../component/BackButton";
 
 class EditPage extends React.Component {
   state = {
@@ -39,6 +40,7 @@ class EditPage extends React.Component {
           handleInput={this.handleInput}
           handleSubmit={this.handleSubmit}
         />
+        <BackButton />
       </>
     );
   }
