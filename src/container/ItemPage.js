@@ -64,6 +64,12 @@ class ItemPage extends React.Component {
               </div>
             </div>
           </div>
+          <div onClick={() => this.props.history.goBack()} id="back-btn">
+            <img
+              src="https://img.icons8.com/color/48/000000/circled-left-2.png"
+              alt="back arrow button"
+            />
+          </div>
         </div>
         {/* Container with item's descriptions and map */}
         <div className="ten wide column ui" id="description-container">

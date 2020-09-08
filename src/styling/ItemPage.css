@@ -1,6 +1,7 @@
 #item-page-container {
   padding-left: 7%;
   padding-right: 7%;
+  margin-bottom: 20px;
 }
 
 #item-page-container #description-container {
@@ -40,33 +41,6 @@
   object-fit: contain;
 }
 
-/* #item-page-container {
-  margin-top: 20px;
-  margin-bottom: 20px;
+#item-page-container #photo-container #back-btn {
+  cursor: pointer;
 }
-
-#item-page-container #photo-container {
-  padding-right: 60px;
-}
-
-#item-page-container #photo-container .ui.card {
-  font-size: 16px;
-  float: right;
-}
-
-#item-page-container .description {
-  margin-bottom: 5px;
-}
-
-
-
-#item-page-container #description-container {
-  text-align: left;
-  float: left;
-  padding-right: 100px;
-  font-size: 16px;
-}
-
-#item-page-container #description-container .ui.header {
-  margin-bottom: 10px;
-} */
