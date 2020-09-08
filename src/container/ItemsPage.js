@@ -2,6 +2,7 @@ import React from "react";
 import Item from "./Item";
 import AllItemsFilter from "./AllItemsFilter";
 import "../styling/ItemsPage.css";
+import ScrollUpButton from "react-scroll-up-button";
 
 class ItemsPage extends React.Component {
   state = {
@@ -78,6 +79,7 @@ class ItemsPage extends React.Component {
         </div>
         <div className="twelve wide column">
           <div className="ui three column grid">{this.renderItems()}</div>
+          <ScrollUpButton />
         </div>
       </div>
     );
