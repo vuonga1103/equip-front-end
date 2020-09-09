@@ -1,6 +1,7 @@
 import React from "react";
 import "../styling/App.css";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
+import InfiniteScroll from "react-infinite-scroll-component";
 import NavBar from "../component/NavBar";
 import Banner from "../component/Banner";
 import ItemPage from "./ItemPage";
@@ -33,6 +34,8 @@ class App extends React.Component {
 
     // Current logged in user's token
     token: "",
+
+    // For infinite scroll
   };
 
   componentDidMount() {
@@ -110,7 +113,7 @@ class App extends React.Component {
     alert("Log Out Successful!");
   };
 
-  // Takes in a user object initially without longitude and latitude added, use the user's to make an API request to geocode, get back the longitude and latitude, assign them to the user, then depending on whether the user is registering or is just editing their account, to call either persistNewUser() or updateUser()
+  // Takes in a user object initially without longitude and latitude added, use the user's zip to make an API request to geocode, get back the longitude and latitude, assign them to the user, then depending on whether the user is registering or is just editing their account, to call either persistNewUser() or updateUser()
   addLongAndLat = (user) => {
     const zip = user.zip;
     const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
@@ -259,7 +262,7 @@ class App extends React.Component {
     this.setState({ items });
   }
 
-  // Function to calculate distancce between two coordinates, obtained from https://www.geodatasource.com/developers/javascript; this is to avoid making another API request
+  // Function to calculate distance between two coordinates, obtained from https://www.geodatasource.com/developers/javascript; this is to avoid making another API request
   distanceBetweenCoordinates = (lat1, lon1, lat2, lon2, unit) => {
     if (lat1 === lat2 && lon1 === lon2) {
       return 0;
