@@ -2,34 +2,14 @@ import React from "react";
 import "../styling/AllItemsFilter.css";
 
 class AllItemsFilter extends React.Component {
-  // Handles change of sorting/filtering inputs; calls function to change states of sort, category, condition, availability in ItemsPage based on what user inputted
-  handleChange = (e) => {
-    const { name, value, checked } = e.target;
+  render() {
     const {
-      setSort,
-      setCategory,
-      setCondition,
-      addToAvailability,
-      removeFromAvailability,
+      filters: { shipping, pickup, category, condition },
+      sort,
+      handleFilterChange,
+      handleSort,
     } = this.props;
 
-    switch (name) {
-      case "sort":
-        setSort(value);
-        break;
-      case "category":
-        setCategory(value);
-        break;
-      case "condition":
-        setCondition(value);
-        break;
-      default:
-        // Default is shipping/pickup availability
-        checked ? addToAvailability(name) : removeFromAvailability(name);
-    }
-  };
-
-  render() {
     return (
       <div id="all-items-filter-container">
         <h4 className="ui header">Sort or Filter</h4>
@@ -38,7 +18,8 @@ class AllItemsFilter extends React.Component {
           <select
             className="ui fluid dropdown"
             name="sort"
-            onChange={this.handleChange}
+            value={sort}
+            onChange={handleSort}
           >
             <option value="">Select Sort Criteria</option>
             <option value="low-to-high">Price: Low-to-High</option>
@@ -53,12 +34,18 @@ class AllItemsFilter extends React.Component {
             <input
               type="checkbox"
               name="shipping"
-              onChange={this.handleChange}
+              checked={shipping}
+              onChange={handleFilterChange}
             />
             <label>Shipping</label>
           </div>
           <div className="ui slider checkbox">
-            <input type="checkbox" name="pickup" onChange={this.handleChange} />
+            <input
+              type="checkbox"
+              name="pickup"
+              checked={pickup}
+              onChange={handleFilterChange}
+            />
             <label>Pickup</label>
           </div>
         </div>
@@ -68,7 +55,8 @@ class AllItemsFilter extends React.Component {
           <select
             className="ui fluid dropdown"
             name="category"
-            onChange={this.handleChange}
+            value={category}
+            onChange={handleFilterChange}
           >
             <option value="">Select Category</option>
             <option value="Wheelchairs & Scooters">
@@ -87,7 +75,8 @@ class AllItemsFilter extends React.Component {
           <select
             className="ui fluid dropdown"
             name="condition"
-            onChange={this.handleChange}
+            value={condition}
+            onChange={handleFilterChange}
           >
             <option value="">Select Condition</option>
             <option value="New">New</option>

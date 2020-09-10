@@ -43,13 +43,14 @@ const AboutPage = () => {
             <b>Equip</b> is a great option if you are:
           </p>
           <ul>
-            <li>someone who want to help reduce waste by reusing</li>
+            <li>someone who wants to help reduce waste by reusing</li>
             <li>
               someone who might need an equipment only temporarily due to a
-              short-term disability and do not want to overpay for something new
+              short-term disability and does not want to overpay for something
+              new
             </li>
             <li>
-              someone who do not want to deal with the bureaucracy of getting
+              someone who does not want to deal with the bureaucracy of getting
               your insurance company's approval for an equipment
             </li>
           </ul>

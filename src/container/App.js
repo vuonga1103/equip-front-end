@@ -1,7 +1,6 @@
 import React from "react";
 import "../styling/App.css";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
 import NavBar from "../component/NavBar";
 import Banner from "../component/Banner";
 import ItemPage from "./ItemPage";
@@ -16,6 +15,7 @@ import SellerPage from "./SellerPage";
 import NewItemPage from "./NewItemPage";
 import NotFoundPage from "../component/NotFoundPage";
 import ProtectedRoute from "../component/ProtectedRoute";
+import InfiniteScroll from "react-infinite-scroll-component";
 
 class App extends React.Component {
   state = {
@@ -32,10 +32,22 @@ class App extends React.Component {
       email: "",
     },
 
+    // For infinite scroll
+    pageNumber: 1,
+    hasMore: true,
+    loader: "https://thumbs.gfycat.com/OrnateCleanArmyworm-size_restricted.gif",
+
     // Current logged in user's token
     token: "",
 
-    // For infinite scroll
+    filters: {
+      shipping: false,
+      pickup: false,
+      category: "",
+      condition: "",
+    },
+
+    sort: "",
   };
 
   componentDidMount() {
@@ -46,12 +58,93 @@ class App extends React.Component {
     this.persistLoggedInUser();
   }
 
-  // Get items that have already been filtered in the backend for only items that have not been sold (item.sold is false); set this.state.items array to the items that return
-  getItems = () => {
-    fetch("http://localhost:4000/items")
+  handleFilterChange = (e) => {
+    const { name, value } = e.target;
+    const filters = { ...this.state.filters };
+    if (name === "shipping" || name === "pickup") {
+      filters[name] = !this.state.filters[name];
+    } else {
+      filters[name] = value;
+    }
+    this.setState({ filters, pageNumber: 1 }, () =>
+      this.sortFilterFetch(filters)
+    );
+  };
+
+  sortFilterFetch = (filters) => {
+    let query = "";
+
+    for (let criteria in filters) {
+      let value = filters[criteria];
+      if (value) {
+        if (typeof value === "string") {
+          value = value.replace(/ /g, "%20").replace(/&/g, "%26");
+        }
+        query += `&${criteria}=${value}`;
+      }
+    }
+
+    fetch(`http://localhost:4000/items?page=1` + query)
       .then((response) => response.json())
       .then((items) => {
-        this.setState({ items });
+        // If fetched everything, make loader icon disappear
+        // change thisssss
+        // items = this.sortItems(this.state.sort);
+        // Up the page number to send
+        this.setState({
+          items,
+          pageNumber: 2,
+        });
+
+        this.getVisitorsLocation();
+
+        this.sortItems(this.state.sort);
+
+        // Assign mileage to each item
+
+        return true;
+      });
+  };
+
+  // return data with those specified qualities
+
+  getItems = () => {
+    const pageNumber = this.state.pageNumber;
+    const filters = this.state.filters;
+
+    let query = "";
+
+    for (let criteria in filters) {
+      let value = filters[criteria];
+
+      if (value) {
+        if (typeof value === "string")
+          value = value.replace(/ /g, "%20").replace(/&/g, "%26");
+
+        query += `&${criteria}=${value}`;
+      }
+    }
+
+    fetch(`http://localhost:4000/items?page=${this.state.pageNumber}` + query)
+      .then((response) => response.json())
+      .then((items) => {
+        // console.log("finished fetch", items.length === this.state.items.length);
+
+        // If fetched everything, make loader icon disappear
+        // change thisssss
+
+        // Up the page number to send
+        // const items = [...this.state.items, ...result];
+        if (this.state.sort) items = this.sortItems(this.state.sort);
+
+        this.setState({
+          items,
+          pageNumber: pageNumber + 1,
+        });
+
+        // Assign mileage to each item
+        this.getVisitorsLocation();
+
         return true;
       });
   };
@@ -217,6 +310,18 @@ class App extends React.Component {
     return items;
   };
 
+  handleSort = (e) => {
+    const sort = e.target.value;
+    this.setState({ sort }, () => this.sortFilterFetch(this.state.filters));
+
+    // setState(
+    //   { name: "Michael" },
+    //   () => console.log(this.state)
+    // );
+
+    // this.sortFilterFetch(this.state.filters);
+  };
+
   // *****************************************************************************
   // *************************** GEOLOCATION FUNCTIONS ***************************
   // *****************************************************************************
@@ -294,7 +399,8 @@ class App extends React.Component {
   // *****************************************************************************
 
   render() {
-    this.getVisitorsLocation(); // Get the visitor's location on page render
+    // this.getItems();
+    // Get the visitor's location on page render
 
     // If localStorage has key "token" that points to something that is not an empty string, then we are logged in; loggedIn var is used to determine where we should direct user if they visit /login and /register
     const loggedIn = localStorage.getItem("token");
@@ -376,7 +482,34 @@ class App extends React.Component {
           <Route path="/not-found" exact component={NotFoundPage} />
 
           <Route path="/" exact>
-            <ItemsPage items={this.state.items} sortItems={this.sortItems} />
+            <InfiniteScroll
+              dataLength={this.state.items.length}
+              next={this.getItems}
+              hasMore={this.state.hasMore}
+              loader={
+                this.state.loader ? (
+                  <img
+                    src={this.state.loader}
+                    alt="loading icon"
+                    style={{
+                      width: "75px",
+                      marginLeft: "20%",
+                    }}
+                  />
+                ) : (
+                  <h4> </h4>
+                )
+              }
+            >
+              <ItemsPage
+                items={this.state.items}
+                getItems={this.getItems}
+                filters={this.state.filters}
+                handleFilterChange={this.handleFilterChange}
+                sort={this.state.sort}
+                handleSort={this.handleSort}
+              />
+            </InfiniteScroll>
           </Route>
 
           {/* Catch-all for if none of the routes above matches */}
