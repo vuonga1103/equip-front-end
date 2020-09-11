@@ -1,7 +1,6 @@
 import React from "react";
 import "../styling/App.css";
 import { Route, Switch, Redirect, withRouter } from "react-router-dom";
-import InfiniteScroll from "react-infinite-scroll-component";
 import NavBar from "../component/NavBar";
 import Banner from "../component/Banner";
 import ItemPage from "./ItemPage";
@@ -51,7 +50,7 @@ class App extends React.Component {
     fetch("http://localhost:4000/items")
       .then((response) => response.json())
       .then((items) => {
-        this.setState({ items });
+        this.setState({ items }, () => this.getVisitorsLocation());
         return true;
       });
   };
@@ -294,8 +293,6 @@ class App extends React.Component {
   // *****************************************************************************
 
   render() {
-    this.getVisitorsLocation(); // Get the visitor's location on page render
-
     // If localStorage has key "token" that points to something that is not an empty string, then we are logged in; loggedIn var is used to determine where we should direct user if they visit /login and /register
     const loggedIn = localStorage.getItem("token");
 

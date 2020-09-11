@@ -3,6 +3,7 @@ import Item from "./Item";
 import AllItemsFilter from "./AllItemsFilter";
 import "../styling/ItemsPage.css";
 import ScrollUpButton from "react-scroll-up-button";
+import ItemsSearch from "./ItemsSearch";
 
 class ItemsPage extends React.Component {
   state = {
@@ -10,6 +11,7 @@ class ItemsPage extends React.Component {
     category: "",
     condition: "",
     availability: [],
+    search: "",
   };
 
   // Calls .sortItem() passed down from App.js, where this.state.items in App.js will be sorted according to the sort criteria that was passed in/set
@@ -19,14 +21,13 @@ class ItemsPage extends React.Component {
   };
 
   // Re-sets category based on input
-  setCategory = (category) => {
-    this.setState({ category });
-  };
+  setCategory = (category) => this.setState({ category });
 
   // Re-sets condition based on input
-  setCondition = (condition) => {
-    this.setState({ condition });
-  };
+  setCondition = (condition) => this.setState({ condition });
+
+  // Re-sets search based on input
+  setSearch = (search) => this.setState({ search });
 
   // Adds to this.state.availability array and re-sets availability (this is called when the user checks either shipping or pickup when filtering)
   addToAvailability = (val) => {
@@ -43,10 +44,11 @@ class ItemsPage extends React.Component {
 
   renderItems = () => {
     // Pull out category, condition, availability attributes from this.state
-    const { category, condition, availability } = this.state;
+    const { category, condition, availability, search } = this.state;
 
-    // Filter for inputted category and condition
+    // Filter for inputted category, condition, and search term
     let filteredItems = this.props.items
+      .filter((i) => i.name.toLowerCase().includes(search.toLowerCase()))
       .filter((i) => i.category.includes(category))
       .filter((i) => {
         // If user doesn't select a condition, should display items in all conditions
@@ -69,6 +71,7 @@ class ItemsPage extends React.Component {
     return (
       <div className="ui grid container" id="items-page-container">
         <div className="four wide column">
+          <ItemsSearch search={this.state.search} setSearch={this.setSearch} />
           <AllItemsFilter
             setSort={this.setSort}
             setCategory={this.setCategory}
