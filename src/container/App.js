@@ -298,7 +298,11 @@ class App extends React.Component {
 
     return (
       <div className="App">
-        <NavBar loggedIn={loggedIn} handleLogOut={this.handleLogOut} />
+        <NavBar
+          loggedIn={loggedIn}
+          handleLogOut={this.handleLogOut}
+          username={this.state.user.username}
+        />
         <Banner loggedIn={loggedIn} />
 
         <Switch>

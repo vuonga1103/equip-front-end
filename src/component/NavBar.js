@@ -2,7 +2,7 @@ import React from "react";
 import "../styling/NavBar.css";
 import { Link } from "react-router-dom";
 
-const NavBar = ({ loggedIn, handleLogOut }) => {
+const NavBar = ({ loggedIn, handleLogOut, username }) => {
   return (
     <nav className="ui huge menu">
       <Link to={"/"}>
@@ -33,7 +33,14 @@ const NavBar = ({ loggedIn, handleLogOut }) => {
           </div>
         ) : null}
 
-        {/* If the user IS LOGGED IN, display the Log Out button; if they are NOT LOGGED IN, display the Sign Up button */}
+        {/* If the user IS LOGGED IN, display "Logged In As" and the Log Out button; if they are NOT LOGGED IN, display the Sign Up button */}
+        {loggedIn ? (
+          <div className="item" id="logged-in-as">
+            <div style={{ marginRight: "4px" }}>Logged In As</div>
+            <Link to={"/seller"}>{username}</Link>
+          </div>
+        ) : null}
+
         <div className="item">
           {loggedIn ? (
             <div className="ui primary button" onClick={handleLogOut}>
