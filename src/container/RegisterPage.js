@@ -25,7 +25,7 @@ class RegisterPage extends React.Component {
 
     let newUser = {};
     for (const attr in this.state) {
-      if (attr !== "password_confirm") newUser[attr] = this.state[attr];
+      if (attr !== "passwordConfirm") newUser[attr] = this.state[attr];
     }
 
     // Call this function to add longitude and latitude based on the user's input zip (via geoAPI), then will subsequently update the user in the database. All this happens in App.js
