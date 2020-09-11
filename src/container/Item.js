@@ -48,6 +48,8 @@ class Item extends React.Component {
         .then((response) => response.json())
         .then((item) => {
           this.props.removeFromUserItems(item);
+          this.props.removeItem(item);
+          return true;
         });
     }
   };

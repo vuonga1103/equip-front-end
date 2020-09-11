@@ -195,6 +195,11 @@ class App extends React.Component {
     this.setState({ items });
   };
 
+  removeItem = (item) => {
+    const items = this.state.items.filter((i) => i.id !== item.id);
+    this.setState({ items });
+  };
+
   // Update the item in this.state.items
   updateItem = (item) => {
     const items = this.state.items.map((i) => {
@@ -371,6 +376,7 @@ class App extends React.Component {
             path="/seller"
             user={this.state.user}
             component={SellerPage}
+            removeItem={this.removeItem}
             addOrRemoveItem={this.addOrRemoveItem}
           />
 
