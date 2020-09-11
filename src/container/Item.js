@@ -48,6 +48,10 @@ class Item extends React.Component {
           <Link to={`/item-page/${item.id}`}>
             <div className="image">
               <img src={item.photo} alt={item.name} />
+              <i
+                className="times circle outline icon large"
+                id="item-delete-icon"
+              ></i>
             </div>
           </Link>
 

@@ -19,3 +19,9 @@
   width: 100%;
   object-fit: contain;
 }
+
+#item-card .image #item-delete-icon {
+  position: absolute;
+  right: 0px;
+  top: 4px;
+}

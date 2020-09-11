@@ -2,7 +2,7 @@ import React from "react";
 
 const SoldCheckbox = ({ item, toggleSold }) => {
   return (
-    <div className="ui toggle checkbox">
+    <div className="ui toggle checkbox" style={{ marginTop: "5px" }}>
       <input
         type="checkbox"
         name="public"

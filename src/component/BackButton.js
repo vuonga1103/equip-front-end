@@ -1,15 +1,12 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
+import "../styling/BackButton.css";
 
 class BackButton extends React.Component {
   render() {
     return (
       <div onClick={() => this.props.history.goBack()} className="back-btn">
-        <img
-          src="https://img.icons8.com/color/48/000000/circled-left-2.png"
-          alt="back arrow button"
-          style={{ cursor: "pointer" }}
-        />
+        <i className="arrow alternate circle left icon big"></i>
       </div>
     );
   }

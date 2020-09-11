@@ -45,8 +45,8 @@
   position: relative;
 }
 
-#item-page-container #photo-container .back-btn img {
+#item-page-container #photo-container .back-btn {
   cursor: pointer;
   position: absolute;
-  margin-left: -13%;
+  margin-left: 35%;
 }
