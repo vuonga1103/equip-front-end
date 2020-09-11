@@ -20,8 +20,18 @@
   object-fit: contain;
 }
 
-#item-card .image #item-delete-icon {
+#item-card #item-delete-icon {
   position: absolute;
-  right: 0px;
-  top: 4px;
+  right: 3px;
+  top: 8px;
+  color: #2585d4;
+  cursor: pointer;
+}
+
+#item-card #item-edit-icon {
+  position: absolute;
+  left: 8px;
+  top: 8px;
+  color: #2585d4;
+  cursor: pointer;
 }

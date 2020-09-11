@@ -54,9 +54,15 @@ class SellerPage extends React.Component {
           item={i}
           // Passing on addOrRemoveItem prop, which will add or remove the item from root page depending on its sold status
           addOrRemoveItem={this.props.addOrRemoveItem}
+          removeFromUserItems={this.removeFromUserItems}
         />
       );
     });
+  };
+
+  removeFromUserItems = (item) => {
+    const userItems = this.state.userItems.filter((i) => i.id !== item.id);
+    this.setState({ userItems });
   };
 
   render() {

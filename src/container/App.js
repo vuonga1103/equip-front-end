@@ -8,6 +8,7 @@ import AboutPage from "../component/AboutPage";
 import HomePage from "../component/HomePage";
 import ItemsPage from "./ItemsPage";
 import LogInPage from "./LogInPage";
+import EditItemPage from "./EditItemPage";
 import RegisterPage from "./RegisterPage";
 import EditPage from "./EditPage";
 import EditPasswordPage from "./EditPasswordPage";
@@ -194,6 +195,15 @@ class App extends React.Component {
     this.setState({ items });
   };
 
+  // Update the item in this.state.items
+  updateItem = (item) => {
+    const items = this.state.items.map((i) => {
+      if (i.id === item.id) return item;
+      return i;
+    });
+    this.setState({ items });
+  };
+
   // Takes in a sort criteria ("low-to-high", "high-to-low", or "location"), sort this.state.items accordingly
   sortItems = (criteria) => {
     let items = [...this.state.items];
@@ -371,6 +381,15 @@ class App extends React.Component {
             getVisitorsLocation={this.getVisitorsLocation}
             component={NewItemPage}
           />
+
+          <ProtectedRoute
+            exact
+            path="/edit-item/:id"
+            updateItem={this.updateItem}
+            getVisitorsLocation={this.getVisitorsLocation}
+            component={EditItemPage}
+          />
+
           {/*********************************************************/}
           {/*********************************************************/}
 

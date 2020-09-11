@@ -5,6 +5,10 @@ import BriefDetails from "../component/BriefDetails";
 import SoldCheckbox from "../component/SoldCheckbox";
 
 class Item extends React.Component {
+  state = {
+    displayDelete: false,
+  };
+
   toggleSold = (item) => {
     // Toggle sold attribute
     item.sold = !item.sold;
@@ -31,6 +35,23 @@ class Item extends React.Component {
       });
   };
 
+  handleDelete = (item) => {
+    if (window.confirm("Are you sure you want to delete this item?")) {
+      fetch("http://localhost:4000/items/" + item.id, {
+        method: "DELETE",
+        headers: {
+          Accept: "application/json",
+          "Content-Type": "application/json",
+          Authorization: `bearer ${localStorage.token}`,
+        },
+      })
+        .then((response) => response.json())
+        .then((item) => {
+          this.props.removeFromUserItems(item);
+        });
+    }
+  };
+
   render() {
     // withRouter gives access to location; can access the pathname via location.pathname
     const location = this.props.location;
@@ -43,15 +64,29 @@ class Item extends React.Component {
 
     return (
       <div className="column">
-        <div className="ui fluid card" id="item-card">
+        <div
+          className="ui fluid card"
+          id="item-card"
+          onMouseEnter={() => this.setState({ displayDelete: true })}
+          onMouseLeave={() => this.setState({ displayDelete: false })}
+        >
+          {sellerLoggedIn && this.state.displayDelete ? (
+            <>
+              <Link to={`/edit-item/${item.id}`}>
+                <i className="edit icon large" id="item-edit-icon"></i>
+              </Link>
+
+              <i
+                className="times circle icon large"
+                id="item-delete-icon"
+                onClick={() => this.handleDelete(item)}
+              ></i>
+            </>
+          ) : null}
           {/* Photo of item */}
           <Link to={`/item-page/${item.id}`}>
             <div className="image">
               <img src={item.photo} alt={item.name} />
-              <i
-                className="times circle outline icon large"
-                id="item-delete-icon"
-              ></i>
             </div>
           </Link>
 
