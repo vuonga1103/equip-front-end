@@ -1,6 +1,5 @@
 import React from "react";
-import "../styling/EditPage.css";
-import Form from "../component/Form";
+import RegisterEditForm from "../component/RegisterEditForm";
 import { withRouter } from "react-router-dom";
 import BackButton from "../component/BackButton";
 
@@ -35,7 +34,7 @@ class EditPage extends React.Component {
   render() {
     return (
       <>
-        <Form
+        <RegisterEditForm
           user={this.state}
           handleInput={this.handleInput}
           handleSubmit={this.handleSubmit}

@@ -190,7 +190,7 @@ class App extends React.Component {
   addOrRemoveItem = (item) => {
     const items = item.sold
       ? this.state.items.filter((i) => i.id !== item.id)
-      : [...this.state.items, item];
+      : [item, ...this.state.items];
 
     this.setState({ items });
   };

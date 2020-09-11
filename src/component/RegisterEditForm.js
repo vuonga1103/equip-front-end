@@ -1,4 +1,6 @@
 import React from "react";
+import "../styling/RegisterEditForm.css";
+
 import { useLocation, Link } from "react-router-dom";
 
 const Form = (props) => {
