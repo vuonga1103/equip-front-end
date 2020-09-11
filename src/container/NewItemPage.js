@@ -13,6 +13,8 @@ class NewItemPage extends React.Component {
     shipping: false,
     category: "",
     photo: "",
+
+    loader: false,
   };
 
   // Handle user's inputs of new item's information
@@ -32,6 +34,8 @@ class NewItemPage extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
+    this.setState({ loader: true });
+
     // Creation of a new formData, which is a format we can use to send the info, including the image of the item the user uploaded
     const formData = new FormData();
 
@@ -39,6 +43,8 @@ class NewItemPage extends React.Component {
     for (const key in this.state) {
       formData.append(key, this.state[key]);
     }
+
+    //MAKE LOADING ICON POP UP
 
     fetch("http://localhost:4000/items", {
       method: "POST",
@@ -59,6 +65,8 @@ class NewItemPage extends React.Component {
         // Involved with this function is the setting of the distance (between the seller and the current viewer of page-- aka to have the "x mi away" part to display under the new item's image in the root page)
         getVisitorsLocation();
 
+        this.loader = false;
+
         return true;
       });
   };
@@ -76,6 +84,15 @@ class NewItemPage extends React.Component {
 
     return (
       <>
+        {this.state.loader ? (
+          <div id="submit-load-icon">
+            <img
+              src="https://media3.giphy.com/media/IeQy7gawYpcDaWs56l/giphy.gif"
+              alt="loading icon"
+            />
+          </div>
+        ) : null}
+
         <form
           className="ui form"
           id="new-item-form"

@@ -33,3 +33,22 @@
 #new-item-form #availability-field .checkbox {
   margin-right: 10px;
 }
+
+#submit-load-icon {
+  position: absolute;
+  left: 47%;
+  top: 60%;
+  z-index: 2;
+}
+
+#submit-load-icon img {
+  width: 100px;
+}
+/* 
+#logo {
+  position: absolute; /* Reposition logo from the natural layout */
+/* left: 75px;
+  top: 0px;
+  width: 300px;
+  height: 200px;
+  z-index: 2; */
