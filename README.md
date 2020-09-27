@@ -1,68 +1,80 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+# Equip
+[Video Demo](https://www.youtube.com/watch?v=TLyb1NhYnUs&feature=youtu.be&ab_channel=AnhV)
 
-## Available Scripts
+Equip is an online marketplace where users can sell, buy, or donate used or new durable medical equipment. Users can add items for sale. Users can also browse and search for and sort items by various categories and distance.
 
-In the project directory, you can run:
+[Link to Backend API](https://github.com/vuonga1103/equip-back-end)
 
-### `yarn start`
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## Table of contents
+* [Getting Started](#getting-started)
+* [Features](#features)
+* [Tech Stack](#tech-stack)
+* [Tools](#tools)
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+![Equip](https://i.ibb.co/d6141xr/equip.png)
 
-### `yarn test`
+<a name="getting-started"/>
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Getting started
+1. Install [Rails Backend API](https://github.com/vuonga1103/equip-back-end)
+2. Install [Node.js and npm](https://www.npmjs.com/get-npm)
 
-### `yarn build`
+    ```$ brew install node```
+    
+3. Clone this repo and cd into the directory
+4. Install all dependencies
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+    ```$ npm install```
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+5. Make sure the Rails server is running and then run the app
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+    ```$ npm start```
+    
+<a name="features"/>
 
-### `yarn eject`
+## Features
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Find Items
+![Find items](https://i.ibb.co/fqjC139/sort.png)
+* Browse items sorted by price and location; use of Google Geocode API and navigator geolocation to enable sort by “near me” 
+* Filter items by various categories, enabled by custom logics
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+### View An Item For Sale
+![View items](https://i.ibb.co/L8KNFbf/Screen-Shot-2020-09-27-at-1-25-41-PM.png)
+* View item details and item’s location via Google Map API
+* Email seller directly via link
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+### Selling or Donating
+![Sell](https://i.ibb.co/pJ2tMhY/Screen-Shot-2020-09-27-at-1-26-17-PM.png)
+* List an item for sale by inputting details and uploading an image of the item; image upload facilitated by use of Cloudinary
 
-## Learn More
+### Manage Sale Items
+![Manage](https://i.ibb.co/qMZ3Kd8/Screen-Shot-2020-09-27-at-1-26-49-PM.png)
+* Sort sale items by sold status
+* Edit and delete sale items
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+<a name="tech-stack"/>
 
-### Code Splitting
+## Tech stack
+* React.js
+* Redux
+* Ruby on Rails API (Backend: https://github.com/vuonga1103/equip-back-end)
+* PostgreSQL
+* HTML/CSS
+* SemanticUI
+* Active Record
 
-This section has moved here: https://facebook.github.io/create-react-app/docs/code-splitting
+<a name="tools"/>
 
-### Analyzing the Bundle Size
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size
-
-### Making a Progressive Web App
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app
-
-### Advanced Configuration
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/advanced-configuration
-
-### Deployment
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/deployment
-
-### `yarn build` fails to minify
-
-This section has moved here: https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify
+## Tools
+* [Rack CORS](https://github.com/cyu/rack-cors)
+* [ActiveModel::Serializer](https://github.com/rails-api/active_model_serializers)
+* [BCrypt](https://github.com/codahale/bcrypt-ruby)
+* [Google Geocoding API](https://developers.google.com/maps/documentation/geocoding/start)
+* [Google Maps API](https://developers.google.com/maps/documentation)
+* [React Router](https://reacttraining.com/react-router/web/guides/quick-start)
+* [React Scroll to Top Button](https://www.npmjs.com/package/react-scroll-up-button)
+* [Cloudinary API](https://cloudinary.com/)
