@@ -60,7 +60,6 @@ Equip is an online marketplace where users can sell, buy, or donate used or new 
 
 ## Tech Stack
 * React.js
-* Redux
 * Ruby on Rails API (Backend: https://github.com/vuonga1103/equip-back-end)
 * PostgreSQL
 * HTML/CSS
