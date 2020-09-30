@@ -12,7 +12,7 @@ Equip is an online marketplace where users can sell, buy, or donate used or new 
 * [Tech Stack](#tech-stack)
 * [Tools](#tools)
 
-![Equip](https://i.ibb.co/d6141xr/equip.png)
+![Equip](https://i.ibb.co/XXG9wjs/Screen-Shot-2020-09-29-at-9-20-15-PM.png)
 
 <a name="getting-started"/>
 
@@ -36,22 +36,22 @@ Equip is an online marketplace where users can sell, buy, or donate used or new 
 ## Features
 
 ### Find Items
-![Find items](https://i.ibb.co/fqjC139/sort.png)
+![Find items](https://i.ibb.co/gRrVK3h/Screen-Shot-2020-09-29-at-9-20-28-PM.png)
 * Browse items sorted by price and location; use of Google Geocode API and navigator geolocation to enable sort by “near me” 
 * Filter items by various categories, enabled by custom logics
 
 ### View An Item For Sale
-![View items](https://i.ibb.co/L8KNFbf/Screen-Shot-2020-09-27-at-1-25-41-PM.png)
+![View items](https://i.ibb.co/J3KZqY5/Screen-Shot-2020-09-29-at-9-20-50-PM.png)
 * View item details and item’s location via Google Map API
 * Email seller directly via link
 
 
 ### Selling or Donating
-![Sell](https://i.ibb.co/pJ2tMhY/Screen-Shot-2020-09-27-at-1-26-17-PM.png)
+![Sell](https://i.ibb.co/tL08MMN/Screen-Shot-2020-09-29-at-9-21-34-PM.png)
 * List an item for sale by inputting details and uploading an image of the item; image upload facilitated by use of Cloudinary
 
 ### Manage Sale Items
-![Manage](https://i.ibb.co/qMZ3Kd8/Screen-Shot-2020-09-27-at-1-26-49-PM.png)
+![Manage](https://i.ibb.co/gRWq5xy/Screen-Shot-2020-09-29-at-9-21-57-PM.png)
 * Sort sale items by sold status
 * Edit and delete sale items
 
