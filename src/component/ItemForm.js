@@ -19,8 +19,6 @@ const ItemForm = (props) => {
     handleSubmit,
   } = props;
 
-  console.log(props);
-
   const location = useLocation();
 
   return (

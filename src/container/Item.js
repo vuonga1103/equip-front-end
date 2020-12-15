@@ -3,6 +3,7 @@ import "../styling/Item.css";
 import { Link, withRouter } from "react-router-dom";
 import BriefDetails from "../component/BriefDetails";
 import SoldCheckbox from "../component/SoldCheckbox";
+import { BACKEND_BASE_URL } from "../utils/constants";
 
 class Item extends React.Component {
   state = {
@@ -14,7 +15,7 @@ class Item extends React.Component {
     item.sold = !item.sold;
 
     // Persist to backend, ensuring that the user has appropriate authorization; in backend, will do a double check to make sure that the item belongs to the user
-    fetch("http://localhost:4000/items/" + item.id, {
+    fetch(`${BACKEND_BASE_URL}/items/${item.id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",
@@ -37,7 +38,7 @@ class Item extends React.Component {
 
   handleDelete = (item) => {
     if (window.confirm("Are you sure you want to delete this item?")) {
-      fetch("http://localhost:4000/items/" + item.id, {
+      fetch(`${BACKEND_BASE_URL}/items/${item.id}`, {
         method: "DELETE",
         headers: {
           Accept: "application/json",

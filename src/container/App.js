@@ -16,6 +16,7 @@ import SellerPage from "./SellerPage";
 import NewItemPage from "./NewItemPage";
 import NotFoundPage from "../component/NotFoundPage";
 import ProtectedRoute from "../component/ProtectedRoute";
+import { BACKEND_BASE_URL } from "../utils/constants";
 
 class App extends React.Component {
   state = {
@@ -48,7 +49,7 @@ class App extends React.Component {
 
   // Get items that have already been filtered in the backend for only items that have not been sold (item.sold is false); set this.state.items array to the items that return
   getItems = () => {
-    fetch("http://localhost:4000/items")
+    fetch(`${BACKEND_BASE_URL}/items`)
       .then((response) => response.json())
       .then((items) => {
         this.setState({ items }, () => this.getVisitorsLocation());
@@ -62,7 +63,7 @@ class App extends React.Component {
   // If the user has previously logged in, make a request to /persist, sending the token stored in localStorage. Backend takes care of decoding the token, sends back result in the form of a { user: {}, token: "..."} object
   persistLoggedInUser = () => {
     if (localStorage.token) {
-      fetch("http://localhost:4000/persist", {
+      fetch(`${BACKEND_BASE_URL}/persist`, {
         headers: {
           Authorization: `bearer ${localStorage.token}`,
         },
@@ -139,7 +140,7 @@ class App extends React.Component {
 
   // Persist the new user to the database and then take user home
   persistNewUser = (newUser) => {
-    fetch("http://localhost:4000/users", {
+    fetch(`${BACKEND_BASE_URL}/users`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -158,7 +159,7 @@ class App extends React.Component {
 
   // Update the user in the database, then take user home
   updateUser = (user) => {
-    fetch("http://localhost:4000/users/" + user.id, {
+    fetch(`${BACKEND_BASE_URL}/users/${user.id}`, {
       method: "PATCH",
       headers: {
         Accept: "application/json",

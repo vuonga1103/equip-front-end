@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import ItemForm from "../component/ItemForm";
+import { BACKEND_BASE_URL } from "../utils/constants";
 
 class NewItemPage extends React.Component {
   state = {
@@ -46,7 +47,7 @@ class NewItemPage extends React.Component {
 
     //MAKE LOADING ICON POP UP
 
-    fetch("http://localhost:4000/items", {
+    fetch(`${BACKEND_BASE_URL}/items`, {
       method: "POST",
       headers: { Authorization: `bearer ${localStorage.token}` },
       // Here we are setting the formData instead of the typical JSON

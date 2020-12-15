@@ -14,7 +14,6 @@ const NavBar = ({ loggedIn, handleLogOut, username }) => {
         </div>
       </Link>
 
-      {/* If user is LOGGED IN, display Home button */}
       {loggedIn ? (
         <div className="item">
           <Link to={"/home"}>Home</Link>
@@ -25,7 +24,6 @@ const NavBar = ({ loggedIn, handleLogOut, username }) => {
         <Link to={"/about"}>About</Link>
       </div>
 
-      {/* If user is NOT LOGGED IN, display the Log In button */}
       <div className="right menu">
         {!loggedIn ? (
           <div className="item">
@@ -33,7 +31,6 @@ const NavBar = ({ loggedIn, handleLogOut, username }) => {
           </div>
         ) : null}
 
-        {/* If the user IS LOGGED IN, display "Logged In As" and the Log Out button; if they are NOT LOGGED IN, display the Sign Up button */}
         {loggedIn ? (
           <div className="item" id="logged-in-as">
             <div style={{ marginRight: "4px" }}>Logged In As</div>

@@ -2,6 +2,7 @@ import React from "react";
 import "../styling/EditPasswordPage.css";
 import { withRouter } from "react-router-dom";
 import BackButton from "../component/BackButton";
+import { BACKEND_BASE_URL } from "../utils/constants";
 
 class EditPasswordPage extends React.Component {
   state = {
@@ -19,7 +20,7 @@ class EditPasswordPage extends React.Component {
   };
 
   validateCurrentPassword = (e) => {
-    fetch("http://localhost:4000/validate-current-password", {
+    fetch(`${BACKEND_BASE_URL}/validate-current-password`, {
       method: "POST",
       headers: {
         Accept: "application/json",
@@ -64,7 +65,7 @@ class EditPasswordPage extends React.Component {
       errorPopup += passwordConfirmValid ? "" : "Passwords do not match";
       alert(errorPopup);
     } else {
-      fetch("http://localhost:4000/change-password", {
+      fetch(`${BACKEND_BASE_URL}/change-password`, {
         method: "POST",
         headers: {
           Accept: "application/json",

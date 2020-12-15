@@ -4,6 +4,7 @@ import { Link, withRouter } from "react-router-dom";
 import Item from "./Item";
 import MyItemsFilter from "../component/MyItemsFilter";
 import BackButton from "../component/BackButton";
+import { BACKEND_BASE_URL } from "../utils/constants";
 
 class SellerPage extends React.Component {
   state = {
@@ -17,7 +18,7 @@ class SellerPage extends React.Component {
 
   // Fetch database for all items that belong to the user and set them in this.state.userItems
   getUserItems() {
-    fetch("http://localhost:4000/user-items", {
+    fetch(`${BACKEND_BASE_URL}/user-items`, {
       headers: {
         Authorization: `bearer ${localStorage.token}`,
       },

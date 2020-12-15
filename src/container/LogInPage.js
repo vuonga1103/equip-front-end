@@ -2,6 +2,7 @@ import React from "react";
 import "../styling/LogInPage.css";
 import { withRouter } from "react-router-dom";
 import BackButton from "../component/BackButton";
+import { BACKEND_BASE_URL } from "../utils/constants";
 
 class LogInPage extends React.Component {
   state = {
@@ -18,7 +19,7 @@ class LogInPage extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault();
 
-    fetch("http://localhost:4000/login", {
+    fetch(`${BACKEND_BASE_URL}/login`, {
       method: "POST",
       headers: {
         Accept: "application/json",

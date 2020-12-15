@@ -1,6 +1,7 @@
 import React from "react";
 import { withRouter } from "react-router-dom";
 import ItemForm from "../component/ItemForm";
+import { BACKEND_BASE_URL } from "../utils/constants";
 
 class EditItemPage extends React.Component {
   state = {
@@ -24,7 +25,7 @@ class EditItemPage extends React.Component {
   getItem = () => {
     const id = this.props.computedMatch.params.id;
 
-    fetch("http://localhost:4000/user-item/" + id, {
+    fetch(`${BACKEND_BASE_URL}/user-item/${id}`, {
       headers: {
         Authorization: `bearer ${localStorage.token}`,
       },
@@ -86,7 +87,7 @@ class EditItemPage extends React.Component {
       formData.append(key, this.state[key]);
     }
 
-    fetch("http://localhost:4000/edit-item/" + this.state.id, {
+    fetch(`${BACKEND_BASE_URL}/edit-item/${this.state.id}`, {
       method: "POST",
       headers: { Authorization: `bearer ${localStorage.token}` },
       // Here we are setting the formData instead of the typical JSON

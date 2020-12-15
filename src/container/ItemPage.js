@@ -3,6 +3,7 @@ import "../styling/ItemPage.css";
 import { withRouter } from "react-router-dom";
 import Map from "../component/Map";
 import BackButton from "../component/BackButton";
+import { BACKEND_BASE_URL } from "../utils/constants";
 
 class ItemPage extends React.Component {
   state = { item: null };
@@ -15,7 +16,7 @@ class ItemPage extends React.Component {
   getItem = () => {
     const id = this.props.match.params.id;
 
-    fetch("http://localhost:4000/items/" + id)
+    fetch(`${BACKEND_BASE_URL}/items/${id}`)
       .then((response) => response.json())
       .then((result) => {
         // If we don't get back an error, then set the state for the item accordingly, otherwise take user to the not-found page; we are able to use this.props.history.push() also thanks to withRouter
